@@ -5,11 +5,14 @@ const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000'
 
 // === Personalización rápida ===
 // Cambia estos valores desde tu archivo .env de Vite (frontend/.env)
-const BRAND_NAME = import.meta.env.VITE_BRAND_NAME || 'Kalbert Contreras — Soporte Técnico'
-const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'kalbert.contreras@ejemplo.cl'
-const CONTACT_PHONE_DISPLAY = import.meta.env.VITE_CONTACT_PHONE || '+56 9 3882 8433'
-// Solo dígitos para WhatsApp (e.g., 569XXXXXXXX)
-const CONTACT_PHONE_WA = import.meta.env.VITE_CONTACT_PHONE_WA || '56938828433'
+const BRAND_NAME = import.meta.env.VITE_BRAND_NAME || 'FixPC — Soporte Técnico'
+const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'kalbert.contreras@gmail.com'
+const CONTACT_PHONE_DISPLAY = import.meta.env.VITE_CONTACT_PHONE || '+56 9 3929 1484'
+const CONTACT_PHONE_WA = import.meta.env.VITE_CONTACT_PHONE_WA || '56939291484'
+
+// 🔹 NUEVO: dirección y horario desde .env
+const CONTACT_ADDRESS = import.meta.env.VITE_CONTACT_ADDRESS || 'Rafael Sotomayor 71A, Santiago'
+const CONTACT_HOURS = import.meta.env.VITE_CONTACT_HOURS || 'L–V 10:00–20:00'
 
 export default function App(){
   const [form, setForm] = useState({ name:'', email:'', phone:'', city:'', message:'' })
@@ -53,8 +56,9 @@ export default function App(){
               <h3>Información de contacto</h3>
               <p><strong>Tel:</strong> {CONTACT_PHONE_DISPLAY}</p>
               <p><strong>Correo:</strong> {CONTACT_EMAIL}</p>
-              <p><strong>Dirección:</strong> Rafael Sotomayor 71A, Santiago</p>
-              <p><strong>Horario:</strong> L–V 10:00–20:00</p>
+              {/* 🔹 NUEVO: usan envs, no texto duro */}
+              <p><strong>Dirección:</strong> {CONTACT_ADDRESS}</p>
+              <p><strong>Horario:</strong> {CONTACT_HOURS}</p>
             </div>
           </div>
         </section>
@@ -111,7 +115,7 @@ export default function App(){
 
       <footer className="footer">
         <div className="container">
-          © {new Date().getFullYear()} Kalbert Contreras — Servicio Técnico
+          © {new Date().getFullYear()} {"Kalbert Contreras — Desarrollo fullstack"}
         </div>
       </footer>
     </>
