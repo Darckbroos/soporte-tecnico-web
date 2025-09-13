@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { Link } from "react-router-dom";
+import ServiceCard from "./components/ServiceCard";
+import { servicios } from "./data/services";
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000'
 
@@ -49,7 +52,7 @@ export default function App(){
               <p>Mantención, diagnóstico, reparación, instalación y optimización. A domicilio o en mi estación de trabajo.</p>
               <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
                 <a className="btn" href="#contacto">Solicitar soporte</a>
-                <a className="btn" style={{background:'#10b981'}} href="#servicios">Ver servicios</a>
+                <Link className="btn" style={{background:'#10b981'}} to="/servicios">Ver servicios</Link>
               </div>
             </div>
             <div className="card">
@@ -63,22 +66,41 @@ export default function App(){
           </div>
         </section>
 
+        {/* === Nosotros (sección corta) === */}
+        <section id="nosotros" className="services">
+          <h2>Nosotros</h2>
+          <div className="grid" style={{gridTemplateColumns:'1.2fr 1fr'}}>
+            <div>
+              <p style={{color:'#475569', marginBottom:12}}>
+                En <b>FixPC</b> entregamos soporte técnico confiable y rápido en Santiago.
+                Trabajamos con diagnósticos honestos, precios claros y soluciones que
+                realmente mejoran el rendimiento y vida útil de tus equipos.
+              </p>
+              <Link to="/nosotros" className="btn" style={{background:'#0ea5e9'}}>
+                Conócenos
+              </Link>
+            </div>
+
+            <div className="card">
+              <h3>¿Por qué elegirnos?</h3>
+              <ul style={{marginTop:8, paddingLeft:18, color:'#475569'}}>
+                <li>Respuesta rápida y atención cercana</li>
+                <li>Transparencia en diagnóstico y costos</li>
+                <li>Buenas prácticas y enfoque preventivo</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
         <section id="servicios" className="services">
           <h2>Servicios</h2>
-          <div className="grid" style={{gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))'}}>
-            {[
-              'Mantención preventiva',
-              'Diagnóstico',
-              'Reparación de hardware/software',
-              'Instalación y configuración',
-              'Optimización de rendimiento',
-              'Respaldos y migración de datos',
-              'Particionamiento y formateo',
-              'Limpieza interna/externa',
-              'Cambio de repuestos'
-            ].map(s => (
-              <div className="card" key={s}>{s}</div>
-            ))}
+          <div className="grid" style={{gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))'}}>
+            {servicios.map(s => <ServiceCard key={s.slug} s={s} />)}
+          </div>
+          <div style={{marginTop:12}}>
+            <Link to="/servicios" className="btn" style={{background:"#0ea5e9"}}>
+              ¿Qué servicios ofrecemos? →
+            </Link>
           </div>
         </section>
 
