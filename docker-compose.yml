@@ -27,7 +27,7 @@ services:
         db:
           condition: service_healthy
       ports:
-        - "127.0.0.1:8000:8000"
+        - "127.0.0.1:8001:8000"
       restart: unless-stopped
       command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2
 
@@ -35,7 +35,7 @@ services:
     build: ./frontend
     container_name: soporte_frontend
     environment:
-      VITE_API_BASE: "http://localhost:8000"
+      VITE_API_BASE: "http://localhost:8001"
     ports:
       - "127.0.0.1:8080:80"
     depends_on:

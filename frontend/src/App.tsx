@@ -35,15 +35,7 @@ export default function App(){
 
   return (
     <>
-      <header>
-        <div className="container">
-          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:16}}>
-            <strong style={{fontSize:22}}>{BRAND_NAME}</strong>
-            <a className="btn" href={`https://wa.me/${CONTACT_PHONE_WA}`} target="_blank">WhatsApp</a>
-          </div>
-        </div>
-      </header>
-
+      
       <main className="container">
         <section className="hero">
           <div className="grid">
@@ -52,7 +44,6 @@ export default function App(){
               <p>Mantención, diagnóstico, reparación, instalación y optimización. A domicilio o en mi estación de trabajo.</p>
               <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
                 <a className="btn" href="#contacto">Solicitar soporte</a>
-                <Link className="btn" style={{background:'#10b981'}} to="/servicios">Ver servicios</Link>
               </div>
             </div>
             <div className="card">
@@ -68,7 +59,7 @@ export default function App(){
 
         {/* === Nosotros (sección corta) === */}
         <section id="nosotros" className="services">
-          <h2>Nosotros</h2>
+          <h2>Sobre Nosotros</h2>
           <div className="grid" style={{gridTemplateColumns:'1.2fr 1fr'}}>
             <div>
               <p style={{color:'#475569', marginBottom:12}}>

@@ -7,10 +7,16 @@ function iconFor(slug: string) {
   if (slug.includes("mantencion")) return "🧰";
   if (slug.includes("soporte")) return "💻";
   if (slug.includes("web")) return "🌐";
+  if (slug.includes("armado")) return "🛠️"; // opcional: icono propio
   return "🛠️";
 }
 
 export default function ServicesIndex() {
+  // 👇 ordenamos por 'orden' (si no tiene, lo dejamos al final)
+  const lista = [...servicios].sort(
+    (a, b) => (a.orden ?? 999) - (b.orden ?? 999)
+  );
+
   return (
     <main>
       {/* Hero / encabezado */}
@@ -36,6 +42,7 @@ export default function ServicesIndex() {
               style={{ background: "#0ea5e9" }}
               href={`https://wa.me/${CONTACT_PHONE_WA}`}
               target="_blank"
+              rel="noreferrer"
             >
               Consultar por WhatsApp
             </a>
@@ -46,7 +53,7 @@ export default function ServicesIndex() {
       {/* Grid de servicios */}
       <section className="container" style={{ padding: "28px 0 36px" }}>
         <div className="grid-3">
-          {servicios.map((s) => (
+          {lista.map((s) => (
             <article key={s.slug} className="card service-card hover-up">
               <div className="service-icon">{iconFor(s.slug)}</div>
               <h3 className="service-title">{s.titulo}</h3>
@@ -56,7 +63,6 @@ export default function ServicesIndex() {
                 CLP {s.precioDesde.toLocaleString()} – {s.precioHasta.toLocaleString()}
               </div>
 
-              {/* Highlights rápidos */}
               <ul className="bullets">
                 {s.incluye.slice(0, 2).map((i, idx) => (
                   <li key={idx}>{i}</li>

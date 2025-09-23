@@ -7,21 +7,24 @@ import ServicesIndex from "./pages/ServicesIndex";
 import ServiceDetail from "./pages/ServiceDetail";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Plans from "./pages/Plans";
 import "./styles.css";
 import { SEOProvider } from "./components/SEO";
+import Layout from "./components/Layout";
 
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <SEOProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/servicios" element={<ServicesIndex />} />
-          <Route path="/servicios/:slug" element={<ServiceDetail />} />
-          <Route path="/nosotros" element={<About />} />
-          <Route path="/contacto" element={<Contact />} />
-          {/* Evita pantalla vacía en rutas desconocidas */}
-          <Route path="*" element={<div style={{padding:24}}>Página no encontrada</div>} />
+          <Route element={<Layout />}>
+            <Route path="/" element={<App />} />
+            <Route path="/servicios" element={<ServicesIndex />} />
+            <Route path="/servicios/:slug" element={<ServiceDetail />} />
+            <Route path="/nosotros" element={<About />} />
+            <Route path="/planes" element={<Plans />} />
+            <Route path="/contacto" element={<Contact />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </SEOProvider>

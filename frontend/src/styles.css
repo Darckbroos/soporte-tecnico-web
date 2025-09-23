@@ -156,3 +156,99 @@ input:focus, textarea:focus{
   background: linear-gradient(135deg, rgba(2,132,199,.08), rgba(16,185,129,.08));
   border-bottom:1px solid var(--line);
 }
+
+/* Header fijo y limpio */
+.site-header{
+  position: sticky;        /* se queda fijo arriba mientras scrolleas */
+  top: 0;
+  z-index: 50;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  backdrop-filter: saturate(180%) blur(6px);
+}
+
+.site-header .bar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+}
+
+.site-header .brand{
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.nav{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav a{
+  text-decoration: none;
+  color: #0f172a;
+  font-weight: 500;
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+
+.nav a:hover{ background: #f1f5f9; }
+.nav a.active{ background: #e2e8f0; }
+
+/* Header fijo (si ya lo tienes, solo añade las clases nuevas) */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: saturate(180%) blur(8px);
+  background: rgba(255,255,255,.75);
+  border-bottom: 1px solid rgba(15,23,42,.06);
+}
+
+.nav {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* separación entre menú y botón */
+}
+
+/* Marca con logo */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.brand-logo {
+  width: 62px;
+  height: 62px;
+  object-fit: contain;
+  /* sutil glow azulado */
+  filter: drop-shadow(0 0 6px rgba(59,130,246,.35));
+  border-radius: 6px; /* si quieres esquinas redondeadas */
+}
+
+/* Menú */
+.menu {
+  display: flex; gap: 16px;
+}
+
+.menu a {
+  color: #334155; text-decoration: none; padding: 6px 10px; border-radius: 8px;
+}
+.menu a.active { background: #e2e8f0; color: #0f172a; }
+html { scroll-padding-top: 72px; }
+
+@media (max-width: 1024px){
+  .sticky { position: static !important; }
+}
