@@ -1,56 +1,106 @@
 import { useState } from "react";
+import axios from "axios";
 
-type Props = { defaultMessage?: string };
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000";
 
-export default function ContactForm({ defaultMessage = "" }: Props) {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
-  const [loading, setLoading] = useState(false);
-  const [ok, setOk] = useState<string | null>(null);
-  const [err, setErr] = useState<string | null>(null);
+export default function ContactForm() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+  const [sending, setSending] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
 
-  const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const submit = async (e: React.FormEvent) => {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true); setOk(null); setErr(null);
+    if (sending) return;
+    setSending(true);
+    setStatus("Enviando…");
     try {
-      const api = (import.meta as any).env?.VITE_API_URL ?? "/api";
-      const res = await fetch(`${api}/leads`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          message: [defaultMessage, form.message].filter(Boolean).join("\n"),
-        }),
-      });
-      if (!res.ok) throw new Error("No se pudo enviar el formulario.");
-      setOk("¡Gracias! Te contactaremos pronto.");
-      setForm({ name:"", email:"", phone:"", message:"" });
-    } catch (e:any) {
-      setErr(e.message || "Ocurrió un problema. Intenta nuevamente.");
+      await axios.post(`${API_BASE}/leads`, { ...form, source: "contacto" });
+      setStatus("¡Recibido! Te contactaremos pronto.");
+      setForm({ name: "", email: "", phone: "", message: "" });
+    } catch {
+      setStatus("Hubo un problema. Intenta nuevamente.");
     } finally {
-      setLoading(false);
+      setSending(false);
     }
-  };
+  }
 
   return (
-    <form onSubmit={submit} className="space-y-3">
-      <input className="w-full border rounded-xl px-3 py-2" required
-             name="name" placeholder="Tu nombre" value={form.name} onChange={handle}/>
-      <input className="w-full border rounded-xl px-3 py-2" required type="email"
-             name="email" placeholder="Tu correo" value={form.email} onChange={handle}/>
-      <input className="w-full border rounded-xl px-3 py-2"
-             name="phone" placeholder="Teléfono (opcional)" value={form.phone} onChange={handle}/>
-      <textarea className="w-full border rounded-xl px-3 py-2" required rows={4}
-                name="message" placeholder="Cuéntanos tu problema" value={form.message} onChange={handle}/>
-      <button disabled={loading}
-              className="bg-sky-500 hover:bg-sky-600 disabled:opacity-60 text-white px-4 py-2 rounded-xl">
-        {loading ? "Enviando..." : "Solicitar soporte"}
-      </button>
-      {ok && <p className="text-green-700">{ok}</p>}
-      {err && <p className="text-red-700">{err}</p>}
+    <form onSubmit={submit} className="cols">
+      <div>
+        <label>Tu nombre</label>
+        <input
+          required
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          placeholder="Tu nombre"
+        />
+      </div>
+      <div>
+        <label>Tu correo</label>
+        <input
+          required
+          type="email"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          placeholder="tu@correo.cl"
+        />
+      </div>
+      <div>
+        <label>Teléfono (opcional)</label>
+        <input
+          value={form.phone}
+          onChange={(e) => setForm({ ...form, phone: e.target.value })}
+          placeholder="+56 9 ..."
+        />
+      </div>
+      <div style={{ gridColumn: "1 / -1" }}>
+        <label>Cuéntanos tu problema</label>
+        <textarea
+          required
+          rows={5}
+          value={form.message}
+          onChange={(e) => setForm({ ...form, message: e.target.value })}
+          placeholder="Describe brevemente el problema…"
+        />
+      </div>
+
+      {/* Botón bonito y consistente */}
+      <div
+        style={{
+          gridColumn: "1 / -1",
+          display: "flex",
+          gap: 12,
+          alignItems: "center",
+        }}
+      >
+        <button
+          type="submit"
+          className="btn"
+          disabled={sending}
+          style={{
+            background: "#0ea5e9",
+            width: "100%",            // ocupa todo el ancho de la card
+            padding: "12px 16px",
+            fontWeight: 600,
+            borderRadius: 12,
+            boxShadow: "0 6px 20px -8px rgba(2,6,23,.25)",
+            opacity: sending ? 0.8 : 1,
+            cursor: sending ? "not-allowed" : "pointer",
+            transition: "transform .06s ease",
+          }}
+          onMouseDown={(e) => (e.currentTarget.style.transform = "scale(.99)")}
+          onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
+        >
+          {sending ? "Enviando…" : "Solicitar soporte"}
+        </button>
+
+        {status && <span className="muted" aria-live="polite">{status}</span>}
+      </div>
     </form>
   );
 }

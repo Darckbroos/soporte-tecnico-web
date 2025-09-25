@@ -25,10 +25,16 @@ a:hover{ text-decoration:underline; }
 /* contenedores y secciones */
 .container{
   width:100%;
-  max-width:1100px;
+  max-width:1280px;
   margin:0 auto;
   padding:0 16px;
 }
+
+/* si la pantalla es MUY ancha, estira un poco más */
+@media (min-width: 1536px){
+.container{ max-width: 1800px; }}
+
+
 .hero{ padding:40px 0; }
 .services{ padding:28px 0; }
 .footer{ padding:22px 0; background:#0b1220; color:#e2e8f0; }
@@ -197,58 +203,66 @@ input:focus, textarea:focus{
 .nav a:hover{ background: #f1f5f9; }
 .nav a.active{ background: #e2e8f0; }
 
-/* Header fijo (si ya lo tienes, solo añade las clases nuevas) */
-.site-header {
-  position: sticky; top: 0; z-index: 50;
-  backdrop-filter: saturate(180%) blur(8px);
-  background: rgba(255,255,255,.75);
-  border-bottom: 1px solid rgba(15,23,42,.06);
+/* Header fijo y limpio */
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255,255,255,.9);
+  border-bottom: 1px solid rgba(15,23,42,.08);
+  backdrop-filter: saturate(180%) blur(6px);
 }
 
-.nav {
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+/* Barra principal */
+.header-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between; /* logo a la izq, grupo a la der */
+  gap:16px;
+  height:64px;
 }
 
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 20px; /* separación entre menú y botón */
+/* Marca / logo */
+.brand{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  font-weight:700;
+  color:#0f172a;
+  text-decoration:none;
 }
-
-/* Marca con logo */
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: 700;
-  color: #0f172a;
-  text-decoration: none;
-}
-
-.brand-logo {
-  width: 62px;
-  height: 62px;
-  object-fit: contain;
-  /* sutil glow azulado */
+.brand-logo{
+  width:62px;
+  height:62px;
+  object-fit:contain;
   filter: drop-shadow(0 0 6px rgba(59,130,246,.35));
-  border-radius: 6px; /* si quieres esquinas redondeadas */
+  border-radius:6px;
+}
+
+/* Grupo derecho (menú + CTA) */
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:20px;              /* separación menú <-> botón */
 }
 
 /* Menú */
-.menu {
-  display: flex; gap: 16px;
+.menu{ display:flex; gap:16px; }
+.menu a{
+  color:#334155;
+  text-decoration:none;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:500;
 }
+.menu a:hover{ background:#f1f5f9; }
+.menu a.active{ background:#e2e8f0; color:#0f172a; }
 
-.menu a {
-  color: #334155; text-decoration: none; padding: 6px 10px; border-radius: 8px;
-}
-.menu a.active { background: #e2e8f0; color: #0f172a; }
-html { scroll-padding-top: 72px; }
+/* CTA WhatsApp */
+.wa-btn{ white-space:nowrap; }
 
-@media (max-width: 1024px){
-  .sticky { position: static !important; }
+/* Responsive: en móvil ocultamos menú y dejamos CTA */
+@media (max-width: 840px){
+  .menu{ display:none; }
+  .nav-right{ gap:12px; }
 }

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { servicios } from "../data/services";
+import { serviciosOrdenados } from "../data/services";
 
 const CONTACT_PHONE_WA = import.meta.env.VITE_CONTACT_PHONE_WA || "56939291484";
 
@@ -7,15 +7,13 @@ function iconFor(slug: string) {
   if (slug.includes("mantencion")) return "🧰";
   if (slug.includes("soporte")) return "💻";
   if (slug.includes("web")) return "🌐";
-  if (slug.includes("armado")) return "🛠️"; // opcional: icono propio
+  if (slug.includes("armado")) return "🛠️";
   return "🛠️";
 }
 
 export default function ServicesIndex() {
-  // 👇 ordenamos por 'orden' (si no tiene, lo dejamos al final)
-  const lista = [...servicios].sort(
-    (a, b) => (a.orden ?? 999) - (b.orden ?? 999)
-  );
+  // Orden por 'orden' si existe
+  const lista = serviciosOrdenados(); // 
 
   return (
     <main>
@@ -30,11 +28,29 @@ export default function ServicesIndex() {
         }}
       >
         <div className="container">
-          <h1 style={{ marginTop: 6 }}>Servicios</h1>
-          <p className="muted" style={{ maxWidth: 820 }}>
+          {/* fila: título + botón a la derecha */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 16,
+              flexWrap: "wrap",
+            }}
+          >
+            <h1 style={{ margin: 0 }}>Servicios</h1>
+
+            {/* botón que baja a la grilla */}
+            <a href="#lista" className="btn" style={{ background: "#0ea5e9", whiteSpace: "nowrap" }}>
+              ¿Qué servicios ofrecemos? →
+            </a>
+          </div>
+
+          <p className="muted" style={{ maxWidth: 820, marginTop: 10 }}>
             Elige el servicio que necesitas. Precios referenciales y descripción clara.
             Si tienes dudas, escríbenos y te ayudamos a elegir la mejor opción.
           </p>
+
           <div style={{ marginTop: 14, display: "flex", gap: 12, flexWrap: "wrap" }}>
             <Link to="/" className="btn btn-outline">Volver al inicio</Link>
             <a
@@ -51,7 +67,7 @@ export default function ServicesIndex() {
       </section>
 
       {/* Grid de servicios */}
-      <section className="container" style={{ padding: "28px 0 36px" }}>
+      <section id="lista" className="container" style={{ padding: "28px 0 36px" }}>
         <div className="grid-3">
           {lista.map((s) => (
             <article key={s.slug} className="card service-card hover-up">
@@ -71,7 +87,8 @@ export default function ServicesIndex() {
 
               <div className="card-footer">
                 <Link to={`/servicios/${s.slug}`} className="btn">Ver detalle</Link>
-                <a className="btn btn-outline" href="/#contacto">Solicitar</a>
+                {/* ahora apunta a la nueva página de contacto */}
+                <Link className="btn btn-outline" to="/contacto">Solicitar</Link>
               </div>
             </article>
           ))}

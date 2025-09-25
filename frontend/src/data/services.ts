@@ -106,7 +106,7 @@ export const servicios: Service[] = [
   // Soporte IT (sin cambios funcionales)
   {
     slug: "soporte-tecnico-it",
-    orden: 3,
+    orden: 2,
     titulo: "Soporte Técnico Informático (IT)",
     extracto:
       "Asistencia remota o presencial. Configuración, solución de problemas y optimización.",
@@ -312,7 +312,7 @@ export const servicios: Service[] = [
   // ✅ Armado de PC (el que mencionaste) — intacto
   {
     slug: "armado-pc",
-    orden: 2,
+    orden: 3,
     titulo: "Arma tu PC con nosotros",
     extracto:
       "Te ayudamos a elegir componentes según tu presupuesto, la armamos, probamos y te la entregamos lista para usar.",
@@ -416,3 +416,10 @@ export const servicios: Service[] = [
     ],
   },
 ];
+export function serviciosOrdenados() {
+  // orden estable con fallback alto para los que no traigan `orden`
+  return [...servicios]
+    .map((s, i) => ({ s, i }))
+    .sort((a, b) => (a.s.orden ?? 999) - (b.s.orden ?? 999) || a.i - b.i)
+    .map(x => x.s);
+}

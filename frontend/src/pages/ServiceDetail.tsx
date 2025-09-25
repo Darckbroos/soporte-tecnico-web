@@ -37,7 +37,7 @@ export default function ServiceDetail() {
   // ---- Bloques reutilizables ----
   const Ctas = (
     <div style={{ display: "flex", gap: 12, marginTop: 14, flexWrap: "wrap" }}>
-      <a className="btn" href="/#contacto">
+      <a className="btn" href="/contacto">
         Solicitar soporte
       </a>
       <a className="btn" style={{ background: "#10b981" }} href={waUrl} target="_blank" rel="noreferrer">

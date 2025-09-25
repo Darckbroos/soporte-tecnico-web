@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Link } from "react-router-dom";
 import ServiceCard from "./components/ServiceCard";
-import { servicios } from "./data/services";
+import { serviciosOrdenados } from "./data/services";
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000'
 
@@ -43,7 +43,7 @@ export default function App(){
               <h1>Servicio Técnico PC confiable y rápido</h1>
               <p>Mantención, diagnóstico, reparación, instalación y optimización. A domicilio o en mi estación de trabajo.</p>
               <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
-                <a className="btn" href="#contacto">Solicitar soporte</a>
+                <Link className="btn" to="/contacto">Solicitar soporte</Link>
               </div>
             </div>
             <div className="card">
@@ -84,45 +84,48 @@ export default function App(){
         </section>
 
         <section id="servicios" className="services">
-          <h2>Servicios</h2>
-          <div className="grid" style={{gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))'}}>
-            {servicios.map(s => <ServiceCard key={s.slug} s={s} />)}
-          </div>
-          <div style={{marginTop:12}}>
-            <Link to="/servicios" className="btn" style={{background:"#0ea5e9"}}>
+          {/* fila de encabezado: título + botón */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 12,
+              flexWrap: "wrap",        // en móviles, el botón baja
+              marginBottom: 12
+            }}
+          >
+            <h2 style={{ margin: 0 }}>Servicios</h2>
+            <Link to="/servicios" className="btn" style={{ background: "#0ea5e9" }}>
               ¿Qué servicios ofrecemos? →
             </Link>
           </div>
+
+          {/* cards */}
+          <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }}>
+            {serviciosOrdenados().map(s => <ServiceCard key={s.slug} s={s} />)}
+          </div>
         </section>
 
-        <section id="contacto" className="card">
-          <h2>Solicita tu soporte</h2>
-          <form onSubmit={submit} className="cols">
-            <div>
-              <label>Nombre</label>
-              <input required value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="Tu nombre" />
-            </div>
-            <div>
-              <label>Correo</label>
-              <input required type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} placeholder="tu@correo.cl" />
-            </div>
-            <div>
-              <label>Teléfono</label>
-              <input value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})} placeholder="+56 9 ..." />
-            </div>
-            <div>
-              <label>Ciudad / Comuna</label>
-              <input value={form.city} onChange={e=>setForm({...form,city:e.target.value})} placeholder="Ej: Puente Alto" />
-            </div>
-            <div style={{gridColumn:'1 / -1'}}>
-              <label>Describe tu problema</label>
-              <textarea required rows={5} value={form.message} onChange={e=>setForm({...form,message:e.target.value})} placeholder="Cuéntame qué sucede con tu PC..." />
-            </div>
-            <div style={{gridColumn:'1 / -1',display:'flex',gap:12,alignItems:'center'}}>
-              <button className="btn" type="submit">Enviar solicitud</button>
-              {status && <span style={{color:'#475569'}}>{status}</span>}
-            </div>
-          </form>
+        <section className="card">
+          <h2>¿Necesitas ayuda ahora?</h2>
+          <p className="muted">
+            Agenda tu soporte o cotización. Te respondemos a la brevedad.
+          </p>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <Link to="/contacto" className="btn" style={{ background: "#0ea5e9" }}>
+              Ir a Contacto
+            </Link>
+            <a
+              className="btn"
+              style={{ background: "#10b981" }}
+              href={`https://wa.me/${CONTACT_PHONE_WA}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              WhatsApp
+            </a>
+          </div>
         </section>
       </main>
 

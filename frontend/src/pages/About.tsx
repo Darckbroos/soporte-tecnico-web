@@ -111,7 +111,7 @@ export default function About() {
               </p>
             </div>
             <div style={{ display: "flex", gap: 12, justifyContent: "flex-end", flexWrap: "wrap" }}>
-              <a className="btn" href="/#contacto">Solicitar soporte</a>
+              <a className="btn" href="/contacto">Solicitar soporte</a>
               <a
                 className="btn"
                 style={{ background: "#10b981" }}

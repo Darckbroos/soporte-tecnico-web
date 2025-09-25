@@ -1,17 +1,23 @@
-from fastapi import FastAPI, Depends, HTTPException
+# backend/app/main.py
+from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from .database import Base, engine, get_db
 from . import models, schemas
 from datetime import datetime
+import os
+from .settings import settings
+from app.utils.mailer import build_lead_email, send_email
 
-# Crear tablas si no existen
+print("DB URL:", engine.url)
+if engine.url.drivername.startswith("sqlite"):
+    print("SQLite path:", os.path.abspath(engine.url.database))
+
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="API Soporte Técnico", version="1.0.0")
 
-# CORS
-from .settings import settings
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
@@ -25,13 +31,17 @@ def health():
     return {"status": "ok", "timestamp": datetime.utcnow().isoformat()}
 
 @app.post("/leads", response_model=schemas.LeadOut)
-def create_lead(lead: schemas.LeadIn, db: Session = Depends(get_db)):
-    # Evitar duplicados simples por email + mensaje igual
+def create_lead(
+    lead: schemas.LeadIn,
+    background_tasks: BackgroundTasks,        # 👈 nuevo
+    db: Session = Depends(get_db)
+):
     existing = db.query(models.Lead).filter(
         models.Lead.email == lead.email,
         models.Lead.message == lead.message
     ).first()
     if existing:
+        # Igual disparar correo si quieres, o retornar directo
         return existing
 
     obj = models.Lead(
@@ -45,6 +55,19 @@ def create_lead(lead: schemas.LeadIn, db: Session = Depends(get_db)):
     db.add(obj)
     db.commit()
     db.refresh(obj)
+
+    # Envío de correo en background (no retrasa la respuesta)
+    try:
+        subject, html = build_lead_email(obj)
+        background_tasks.add_task(
+            send_email,
+            subject=subject,
+            html=html,
+            to=settings.notify_email
+        )
+    except Exception as e:
+        print("[mailer] No se pudo programar el envío:", e)
+
     return obj
 
 @app.get("/leads", response_model=list[schemas.LeadOut])
