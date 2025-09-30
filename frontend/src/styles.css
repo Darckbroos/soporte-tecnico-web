@@ -266,3 +266,471 @@ input:focus, textarea:focus{
   .menu{ display:none; }
   .nav-right{ gap:12px; }
 }
+
+
+/* ===== Pricing ===== */
+.pricing { padding: 28px 0 40px; }
+.pricing-head { max-width: 900px; margin-bottom: 18px; }
+
+.price-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Tarjeta tipo “pricing” */
+.price-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 24px rgba(2,132,199,.08);
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  isolation:isolate;
+}
+
+/* Insignia circular arriba (como la segunda imagen) */
+.price-badge{
+  width: 68px; height: 68px;
+  display:grid; place-items:center;
+  font-size: 30px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  color:#0c4a6e;
+  box-shadow: 0 10px 24px rgba(2,132,199,.18);
+  margin-top: -6px;
+}
+
+.price-title{ margin: 10px 0 2px; }
+.price-sub{
+  font-weight: 600;
+  font-size: 13px;
+  color:#0369a1;
+  background:#ecfeff;
+  border:1px solid #bae6fd;
+  border-radius: 999px;
+  display:inline-block;
+  padding: 6px 10px;
+}
+
+.price-features{
+  margin:14px 0 0; padding-left: 18px;
+  color: var(--muted);
+}
+.price-features li{ margin: 6px 0; }
+
+.price-actions{
+  margin-top:auto;
+  display:flex; gap: 10px; flex-wrap:wrap;
+  padding-top: 12px;
+}
+
+/* Botón “pronto” deshabilitado */
+.soon[disabled]{
+  opacity:.7; cursor:not-allowed;
+}
+
+
+/* ==== Imagen cabecera de cards de servicios ==== */
+.service-card { 
+  display: flex; 
+  flex-direction: column; 
+}
+
+.service-thumb {
+  width: 100%;
+  height: 160px;             /* altura para las cards del INICIO */
+  object-fit: cover;         /* recorte bonito sin deformar */
+  border-radius: 12px;
+  display: block;
+  /* Si tu .card tiene padding, este margen negativo hace que la foto "toque" los bordes */
+  margin: -4px -4px 12px -4px;
+}
+
+/* En /servicios la hacemos un poco más alta */
+.service-thumb--lg {
+  height: 200px;             /* ~350x200 de referencia */
+}
+
+/* Evita que el footer suba cuando el texto es corto */
+.service-card .card-footer {
+  margin-top: auto;
+}
+
+.service-thumb{ width:100%; height:160px; object-fit:cover; border-radius:12px; display:block; margin:-4px -4px 12px -4px; }
+.service-thumb--lg{ height:200px; }
+
+
+/* ======= Home: bloque con imagen + cuadro de servicios ======= */
+.feature-services { padding: 20px 0 34px; }
+
+.feature-layout{
+  display:grid;
+  gap:22px;
+  grid-template-columns: 1.05fr 1.4fr;
+  align-items:start;
+}
+
+.feature-image{
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow: 0 16px 40px rgba(2,132,199,.10);
+  border:1px solid var(--line);
+  background:#fff;
+}
+.feature-image img{
+  display:block;
+  width:100%;
+  height:100%;
+  max-height:520px;         /* controla altura */
+  object-fit:cover;
+}
+
+.feature-right{ display:grid; gap:16px; }
+.kicker{
+  display:inline-block;
+  padding:6px 10px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.02em;
+  border-radius:999px;
+  border:1px dashed rgba(2,132,199,.35);
+  color:#0c4a6e;
+  background:#e0f2fe;
+}
+
+/* Cuadro de 4 servicios */
+.service-quad{ padding:16px; }
+.mini-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:14px;
+}
+
+.mini-service{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff;
+  box-shadow: 0 6px 16px rgba(2,132,199,.06);
+}
+
+.chip-emoji{
+  width:44px; height:44px;
+  display:grid; place-items:center;
+  border-radius:12px;
+  background:#e0f2fe;
+  color:#0c4a6e;
+  font-size:22px;
+  flex:0 0 44px;
+  box-shadow: 0 8px 18px rgba(2,132,199,.18);
+}
+
+.mini-title{
+  margin:2px 0 4px;
+  font-size:16px;
+}
+.mini-text{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+}
+
+.quad-actions{
+  margin-top:12px;
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .feature-layout{ grid-template-columns: 1fr; }
+  .feature-image img{ max-height:360px; }
+  .mini-grid{ grid-template-columns: 1fr; }
+}
+
+
+
+/* La imagen siempre visible completa, sin recortar */
+.feature-image img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;      /* <<< clave para que se vea completa */
+  object-position: center;  /* centrada dentro del cuadro */
+}
+
+/* Responsive: en móviles apílalo */
+@media (max-width: 840px){
+  .feature-layout{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Wrapper de dos columnas para la sección de servicio */
+.service-layout{
+  max-width: 1200px;          /* opcional, armoniza con tu container */
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 360px;  /* izquierda + sidebar */
+  gap: 24px;
+  align-items: start;
+}
+
+.service-main{ min-width: 0; }     /* evita overflow en grid */
+
+/* Lo demás ya lo tienes: .service-aside, .gallery-vert, etc. */
+@media (max-width: 980px){
+  .service-layout{ grid-template-columns: 1fr; }
+}
+
+/* === Galería lateral: todas iguales === */
+.service-aside .gallery-vert-item{
+  width: 100%;
+  height: 260px;                 /* <- alto fijo (ajústalo: 240–300) */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0,0,0,.08);
+  background: #fff;
+}
+
+/* Fuerza a que la imagen llene el cuadro y recorte lo sobrante */
+.service-aside .gallery-vert-item .gallery-img{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;  /* recorta sin deformar */
+  object-position: center;       /* centra el recorte (puedes usar 'top') */
+  display: block;
+}
+
+/* Alternativa con proporción exacta en vez de alto fijo (opcional):
+.service-aside .gallery-vert-item{ aspect-ratio: 4 / 3; height: auto; } 
+.service-aside .gallery-vert-item .gallery-img{ height: 100%; } 
+*/
+
+@media (max-width: 980px){
+  .service-aside .gallery-vert-item{ height: 220px; }
+}
+/* Fila de subservicio: alinear contenido al fondo */
+.sub-row { align-items: end; }
+
+/* Celda de precio: que el número quede abajo y a la derecha */
+.price-cell{
+  text-align: right;
+  white-space: nowrap;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;   /* <- abajo */
+  line-height: 1.2;        /* ayuda a igualar la línea base */
+}
+
+/* CONTACTO — Banner completo sin cortes */
+:root{
+  --contact-banner-h: clamp(320px, 18vw, 520px);
+}
+
+.contact-photos{
+  max-width: 1040px;
+  margin: 10px auto 12px;
+  padding: 0;
+}
+
+.contact-photos-row{ display: block; }
+
+.contact-photo{
+  /* Reserva espacio sin distorsión */
+  aspect-ratio: 21 / 8;          /* ≈2.625:1, cercano a tu diseño */
+  height: auto;
+  max-height: var(--contact-banner-h);
+
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 22px rgba(2,132,199,.08);
+
+  /* Fondo suave para cuando el 'contain' deje márgenes */
+  background: linear-gradient(135deg, rgba(2,132,199,.09), rgba(16,185,129,.09));
+}
+
+.contact-photo img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;     /* Se ve COMPLETA */
+  object-position: center;
+  display: block;
+}
+
+/* móvil */
+@media (max-width: 980px){
+  :root{ --contact-banner-h: clamp(160px, 26vw, 260px); }
+  .contact-photos{ max-width: 100%; padding: 0 16px; }
+}
+
+
+/* === SOBRE NOSOTROS: banda con fondo === */
+.about-band{
+  position: relative;
+  isolation: isolate;           /* crea un stacking context */
+  padding: 48px 0;
+  border-radius: 16px;
+}
+/* el velo SIEMPRE debajo del contenido */
+.about-band::before{
+  z-index: 0;                   /* por debajo */
+}
+
+/* Variante: fondo con degradado */
+.about-band--gradient{
+  background: radial-gradient(80% 60% at 50% 0%,
+              rgba(148, 194, 218, 0.1) 0%,
+              rgba(16,185,129,.10) 45%,
+              rgba(2,132,199,.06) 100%);
+}
+
+/* Variante: fondo con imagen (edita la ruta a tu gusto) */
+.about-band--image{
+  background: url('/img/home/about-bg.jpg') center/cover no-repeat;
+}
+/* Texto bien contrastado en la banda */
+.about-band{
+  position: relative;
+  padding: 48px 0;
+  margin: 12px 0 22px;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+/* Si usas imagen de fondo */
+.about-band--image{
+  background: url('/img/home/about-bg.jpg') center/cover no-repeat;
+}
+
+/* Preset "claro": texto oscuro + velo blanco */
+/* color y opacidad del texto: igual que el resto del sitio */
+.about-band h2,
+.about-band p,
+.about-band .about-text{
+  color: var(--ink) !important; /* fuerza texto oscuro */
+  opacity: 1 !important;        /* elimina cualquier opacidad heredada */
+}
+
+.about-band .about-text{
+  color: var(--ink);            /* NO gris: usa el color principal */
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+
+/* Si usas imagen: sube un poco la opacidad del velo blanco */
+.about-band.about-band--image::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(236, 189, 255, 0.747) 0%,
+    rgba(233, 255, 215, 0.705) 55%,
+    rgba(255,255,255,.86) 100%
+  );
+  pointer-events: none;
+  /* z-index lo controla la regla general de arriba */
+}
+
+/* Contenido centrado y angosto */
+.about-content{
+  position: relative;
+  z-index: 1;                   /* por encima */
+}
+
+/* Tipografía del texto */
+.about-text{
+  color: var(--muted);
+  margin: 0 0 12px;
+  line-height: 1.7;
+}
+
+/* Responsive: un poco más de aire en móviles */
+@media (max-width: 840px){
+  .about-band{ padding: 36px 0; }
+  .about-content{ padding: 0 4px; }
+}
+
+
+.hero-visual{
+  aspect-ratio: 16 / 9;      /* proporción fija */
+  height: auto;
+  max-height: clamp(220px, 36vw, 440px);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(2,132,199,.10);
+}
+.hero-visual img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;          /* cambia a contain si lo prefieres */
+  object-position: center;
+  display: block;
+}
+
+
+/* === Menú móvil (hamburger + panel) === */
+.menu-toggle{
+  display: none;
+  width: 42px; height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  padding: 8px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.menu-toggle span{
+  display: block;
+  width: 22px; height: 2px;
+  background: #0f172a;
+  transition: transform .18s ease, opacity .18s ease;
+}
+.menu-toggle.is-open span:nth-child(1){ transform: translateY(6px) rotate(45deg); }
+.menu-toggle.is-open span:nth-child(2){ opacity: 0; }
+.menu-toggle.is-open span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
+
+.mobile-nav{
+  display: none;             /* en desktop no existe */
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 10px 24px rgba(2,132,199,.08);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .25s ease;
+}
+.mobile-nav a{
+  display: block;
+  padding: 12px 16px;
+  border-top: 1px solid #eef2f7;
+  color: #0f172a;
+  text-decoration: none;
+}
+.mobile-nav.is-open{ max-height: 70vh; }  /* abre */
+
+@media (max-width: 840px){
+  .menu{ display: none; }          /* oculta menú horizontal */
+  .nav-right .wa-btn{ display: none; } /* oculta CTA desktop */
+  .menu-toggle{ display: inline-flex; } /* muestra hamburger */
+  .mobile-nav{ display: block; }   /* habilita contenedor del panel */
+}
+
+/* CTA dentro del panel móvil */
+.mobile-nav .mobile-wa{
+  display: inline-block;
+  margin: 10px 16px 16px;
+}
+
+/* Hero y contenido: que no lo tape el header sticky */
+.hero{ padding: 28px 0; }
+main.container, main .container { scroll-margin-top: 72px; }

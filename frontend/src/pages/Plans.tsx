@@ -1,41 +1,91 @@
-// src/pages/Plans.tsx
-import { servicios } from "../data/services";
+// src/components/SupportPlans.tsx
 import { Link } from "react-router-dom";
 
-export default function Plans() {
-  const armado = servicios.find((s) => s.slug === "armado-pc");
+const PLANES = [
+  {
+    slug: "basico",
+    titulo: "Básico",
+    resumen: "Según cantidad de equipos",
+    icono: "🛡️",
+    bullets: [
+      "1 visita mensual programada",
+      "Chequeo de malware y limpieza",
+      "Actualización de sistema y parches",
+      "Verificación de backups",
+      "Soporte remoto razonable en horario hábil",
+    ],
+  },
+  {
+    slug: "pro",
+    titulo: "Pro",
+    resumen: "Según cantidad de equipos",
+    icono: "🚀",
+    bullets: [
+      "2 visitas mensuales programadas",
+      "Limpieza y hardening (descargas/navegación seguras)",
+      "Optimización de arranque y tareas",
+      "Monitoreo básico + checklist preventivo",
+      "Soporte remoto prioritario",
+    ],
+  },
+  {
+    slug: "full",
+    titulo: "Full",
+    resumen: "Según cantidad de equipos",
+    icono: "🏢",
+    bullets: [
+      "4 visitas mensuales programadas",
+      "Políticas de respaldo + pruebas de restauración",
+      "Gestión de licencias y antivirus premium",
+      "Asesoría continua de mejoras",
+      "Soporte remoto + on-call (bajo acuerdo)",
+    ],
+  },
+];
 
+export default function SupportPlans() {
   return (
-    <main className="container">
-      <section className="hero">
-        <h1>Planes de PC</h1>
-        <p style={{ color: "#475569" }}>
-          Elige un perfil según tu uso y presupuesto. Todos los planes son orientativos
-          y se ajustan a stock y marcas preferidas.
+    <section id="planes" className="container pricing">
+      <div className="pricing-head">
+        <h2>Planes de soporte</h2>
+        <p className="muted">
+          Mantenimiento preventivo con visitas programadas, revisión de malware, aplicación
+          de parches, verificación de backups y soporte remoto. El valor depende de la
+          cantidad de equipos y el alcance acordado (los precios unitarios referenciales
+          están en la sección <Link to="/servicios">Servicios</Link>).
         </p>
-      </section>
+      </div>
 
-      <section className="services">
-        {armado?.planes?.length ? (
-          <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))" }}>
-            {armado.planes.map((p, i) => (
-              <div key={i} className="card" style={{ padding: 16 }}>
-                <div style={{ fontWeight: 600 }}>{p.nombre}</div>
-                <div style={{ opacity: 0.8, marginTop: 6 }}>{p.rango}</div>
-                {p.resumen && (
-                  <div style={{ color: "#475569", marginTop: 8, fontSize: 14 }}>{p.resumen}</div>
-                )}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p style={{ color: "#64748b" }}>Pronto publicaremos nuestros planes.</p>
-        )}
+      <div className="price-grid">
+        {PLANES.map((p) => (
+          <article key={p.slug} className="price-card hover-up">
+            <div className="price-badge">{p.icono}</div>
+            <h3 className="price-title">{p.titulo}</h3>
+            <div className="price-sub"> {p.resumen} </div>
 
-        <div style={{ marginTop: 12 }}>
-          <Link to="/servicios/armado-pc" className="btn">Ver detalle del armado →</Link>
-        </div>
-      </section>
-    </main>
+            <ul className="price-features">
+              {p.bullets.map((b, i) => <li key={i}>{b}</li>)}
+            </ul>
+
+            <div className="price-actions">
+              <Link className="btn" to="/contacto" state={{ plan: p.slug }}>
+                Contactarnos
+              </Link>
+
+              {/* Botón preparado para integrar pago más adelante */}
+              <button
+                className="btn btn-outline soon"
+                type="button"
+                disabled
+                title="Pronto habilitaremos pago online"
+                aria-disabled="true"
+              >
+                Pagar online (pronto)
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }

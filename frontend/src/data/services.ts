@@ -32,7 +32,10 @@ export type Service = {
   subservicios?: SubService[];
   notaPrecios?: string;     // disclaimer
   orden?: number; // 👈 NUEVO
+  cover?: string;
 
+
+  oculto?: boolean;   
 };
 
 export const servicios: Service[] = [
@@ -41,23 +44,23 @@ export const servicios: Service[] = [
     slug: "mantencion-reparacion-computadoras",
     orden: 1,
     titulo: "Mantención y Reparación de computadoras",
+    oculto: false,
     extracto:
       "Diagnóstico certero, limpieza interna y reinstalación/configuración cuando corresponde.",
     precioDesde: 20000,
-    precioHasta: 70000,
+    precioHasta: 40000,
     incluye: [
       "Diagnóstico de hardware y software",
       "Limpieza interna y cambio de pasta térmica",
       "Ajustes/instalación de sistema y drivers",
       "Pruebas finales e informe",
     ],
+    cover: "/public/img/servicios/Mantenimiento1.png",
 
-    // opcionales nuevos (ajusta rutas de imágenes cuando las tengas)
-    hero: "/img/servicios/rep_pc_hero.jpg",
     galeria: [
-      "/img/servicios/rep_pc_1.jpg",
-      "/img/servicios/rep_pc_2.jpg",
-      "/img/servicios/rep_pc_3.jpg",
+      "/img/servicios/limpieza2.png",
+      "/img/servicios/Limpieza1.png",
+      "/img/servicios/Limpieza.jpg",
     ],
     beneficios: [
       "Entrega el mismo día en trabajos de mantención (según agenda).",
@@ -68,35 +71,29 @@ export const servicios: Service[] = [
     subservicios: [
       {
         nombre: "Diagnóstico (desarme y pruebas)",
-        desde: 10000,
-        hasta: 20000,
+        desde: 8000,
         descripcion: "Se descuenta si realizas la reparación con nosotros.",
       },
       {
         nombre: "Limpieza interna + cambio de pasta térmica",
-        desde: 20000,
-        hasta: 35000,
+        desde: 25000,
       },
       {
         nombre: "Formateo / instalación de sistema y drivers",
-        desde: 20000,
-        hasta: 30000,
+        desde: 30000,
       },
       {
         nombre: "Reparación de hardware (mano de obra)",
-        desde: 25000,
-        hasta: 50000,
+        desde: 35000,
         descripcion: "Repuestos se cotizan aparte según marca/modelo.",
       },
       {
         nombre: "Armado / orden de cables",
-        desde: 20000,
-        hasta: 40000,
+        desde: 25000,
       },
       {
         nombre: "Respaldo y recuperación básica",
-        desde: 15000,
-        hasta: 25000,
+        desde: 20000,
       },
     ],
     notaPrecios:
@@ -108,23 +105,22 @@ export const servicios: Service[] = [
     slug: "soporte-tecnico-it",
     orden: 2,
     titulo: "Soporte Técnico Informático (IT)",
+    oculto: false,
     extracto:
       "Asistencia remota o presencial. Configuración, solución de problemas y optimización.",
     precioDesde: 15000,
-    precioHasta: 50000,
+    precioHasta: 40000,
     incluye: [
       "Soporte remoto",
       "Instalación y configuración de software",
       "Resolución de fallas comunes",
       "Optimización de rendimiento",
     ],
-
-    // --- NUEVO CONTENIDO PARA LA PÁGINA ---
-    hero: "/img/servicios/it_hero.jpg",
+    cover: "/public/img/servicios/Soporteti.jpg",
     galeria: [
-      "/img/servicios/it_1.jpg",
-      "/img/servicios/it_2.jpg",
-      "/img/servicios/it_3.jpg",
+      "/img/servicios/SoporteTi3.png",
+      "/img/servicios/SoporteTi2.png",
+      "/img/servicios/SoporteTi4.png",
     ],
     beneficios: [
       "Atención remota en minutos (según agenda).",
@@ -135,56 +131,43 @@ export const servicios: Service[] = [
     subservicios: [
       {
         nombre: "Soporte remoto / diagnóstico inicial",
-        desde: 15000,
-        hasta: 25000,
+        desde: 20000,
         descripcion: "Se descuenta si continúas con la solución.",
       },
       {
         nombre: "Eliminación de virus/malware + hardening",
-        desde: 20000,
-        hasta: 35000,
+        desde: 30000,
       },
       {
         nombre: "Optimización de sistema y arranque",
-        desde: 15000,
-        hasta: 30000,
+        desde: 20000,
       },
       {
         nombre: "Instalación de programas/licencias (cliente)",
-        desde: 10000,
-        hasta: 20000,
+        desde: 15000,
         descripcion: "Office, antivirus, impresoras, drivers, etc.",
       },
       {
         nombre: "Configuración impresora / escáner / Wi-Fi",
-        desde: 20000,
-        hasta: 40000,
+        desde: 25000,
       },
       {
         nombre: "Correo corporativo / clientes mail",
-        desde: 15000,
-        hasta: 30000,
+        desde: 30000,
         descripcion: "Outlook, Thunderbird, IMAP/POP/Exchange.",
       },
       {
         nombre: "Respaldo y migración de datos",
-        desde: 20000,
-        hasta: 60000,
+        desde: 35000,
       },
       {
         nombre: "Reinstalación de Windows (sin formatear datos)",
-        desde: 25000,
-        hasta: 45000,
+        desde: 30000,
         descripcion: "Conservando datos personales cuando sea posible.",
       },
     ],
     notaPrecios:
       "Valores por mano de obra. Visita a domicilio dentro de Santiago (anillo Vespucio): +CLP 10.000. Fuera del anillo o urgencias fuera de horario: a convenir.",
-    extras: [
-      "Venta/cotización de licencias originales",
-      "Antivirus premium y backup en la nube",
-      "Capacitación breve posterior a la intervención",
-    ],
     planes: [
       {
         nombre: "Bolsa Remota 3h",
@@ -211,6 +194,7 @@ export const servicios: Service[] = [
     slug: "creacion-paginas-web",
     orden: 4,
     titulo: "Creación de páginas web",
+    oculto: true,
     extracto:
       "Sitios modernos, rápidos y medibles con prácticas SEO on-page e integraciones esenciales.",
     // Rango general del servicio (muestra en la card de /servicios)
@@ -225,13 +209,12 @@ export const servicios: Service[] = [
       "Capacitación breve para editar contenidos",
       "30 días de soporte post-lanzamiento",
     ],
+    cover: "/img/servicios/Programacion.jpg",
 
-    // 👇 NUEVO (ya lo soporta tu ServiceDetail)
-    hero: "/img/servicios/web_hero.jpg",
     galeria: [
-      "/img/servicios/web_1.jpg",
-      "/img/servicios/web_2.jpg",
-      "/img/servicios/web_3.jpg",
+      "/img/servicios/Paginaweb.jpg",
+      "/img/servicios/Paginaweb2.jpg",
+      "/img/servicios/Paginasweb2.png",
     ],
     beneficios: [
       "Carga rápida (Lighthouse 90+ cuando el hosting lo permite)",
@@ -300,13 +283,6 @@ export const servicios: Service[] = [
       },
     ],
 
-    extras: [
-      "Redacción/copywriting y curación de contenidos",
-      "Fotografías/ilustraciones o banco premium",
-      "Email corporativo y DNS (SPF/DMARC/DKIM)",
-      "Multi-idioma",
-      "Automatizaciones (Zapier/Make)",
-    ],
   },
 
   // ✅ Armado de PC (el que mencionaste) — intacto
@@ -314,11 +290,12 @@ export const servicios: Service[] = [
     slug: "armado-pc",
     orden: 3,
     titulo: "Arma tu PC con nosotros",
+    oculto: false,
     extracto:
       "Te ayudamos a elegir componentes según tu presupuesto, la armamos, probamos y te la entregamos lista para usar.",
     // mano de obra
-    precioDesde: 20000,
-    precioHasta: 50000,
+    precioDesde: 15000,
+    precioHasta: 40000,
     incluye: [
       "Asesoría de compra según uso y presupuesto (cotización comparada)",
       "Armado profesional y gestión de cables",
@@ -326,13 +303,12 @@ export const servicios: Service[] = [
       "Pruebas de estrés (CPU/GPU/RAM) y reporte de temperaturas",
       "30 días de soporte remoto / 1 año de garantía de mano de obra",
     ],
+    cover: "/img/servicios/Armapc.png",
 
-    // 👇 NUEVO (ya soportado por tu ServiceDetail)
-    hero: "/img/servicios/armado_hero.jpg",
     galeria: [
-      "/img/servicios/armado_1.jpg",
-      "/img/servicios/armado_2.jpg",
-      "/img/servicios/armado_3.jpg",
+      "/img/servicios/Armadopc1.png",
+      "/img/servicios/Armadopc2.png",
+      "/img/servicios/Armadopc3.png",
     ],
     beneficios: [
       "Cable management prolijo y flujo de aire optimizado",
@@ -343,40 +319,35 @@ export const servicios: Service[] = [
     subservicios: [
       {
         nombre: "Armado estándar (ATX/mATX/ITX) — mano de obra",
-        desde: 25000,
-        hasta: 35000,
+        desde: 35000,
         descripcion: "Montaje completo, orden básico de cables y verificación eléctrica.",
       },
       {
         nombre: "Gestión avanzada de cables (cable management)",
-        desde: 10000,
-        hasta: 15000,
+        desde: 15000,
         descripcion: "Enrutado, bridas/velcro, estética y flujo de aire.",
       },
       {
         nombre: "Instalación de Windows + drivers",
-        desde: 15000,
-        hasta: 25000,
+        desde: 20000,
         descripcion: "Con licencia provista por el cliente.",
       },
       {
         nombre: "Actualización de BIOS",
-        desde: 10000,
-        hasta: 15000,
+        desde: 12000,
       },
       {
         nombre: "Montaje de refrigeración líquida AIO / cooler premium",
-        desde: 10000,
-        hasta: 20000,
+        desde: 18000,
       },
       {
         nombre: "Armado en sitio / despacho en Santiago (opcional)",
-        desde: 10000,
-        hasta: 25000,
+        desde: 25000,
         descripcion: "Según comuna y disponibilidad.",
       },
       {
         nombre: "Pruebas de estrés (CPU/GPU/RAM) + reporte",
+        desde: 0,
         descripcion: "Incluido cuando realizamos el armado e instalación.",
       },
     ],
@@ -407,18 +378,13 @@ export const servicios: Service[] = [
         resumen: "Edición de video, modelado 3D, IA, CAD.",
       },
     ],
-    extras: [
-      "Pasta térmica premium",
-      "Refrigeración líquida AIO / cooler de alto rendimiento",
-      "Iluminación RGB y sincronización",
-      "Overclock ligero (seguro, cuando el hardware lo permite)",
-      "Armado en sitio / despacho",
-    ],
+    
   },
 ];
-export function serviciosOrdenados() {
-  // orden estable con fallback alto para los que no traigan `orden`
+export function serviciosOrdenados(opts: { incluirOcultos?: boolean } = {}) {
+  const { incluirOcultos = false } = opts;
   return [...servicios]
+    .filter(s => incluirOcultos || !s.oculto)  // 👈 filtra ocultos
     .map((s, i) => ({ s, i }))
     .sort((a, b) => (a.s.orden ?? 999) - (b.s.orden ?? 999) || a.i - b.i)
     .map(x => x.s);

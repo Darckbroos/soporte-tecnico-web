@@ -1,6 +1,9 @@
-// src/pages/Contact.tsx
 import { CONTACT } from "../utils/contact";
 import ContactForm from "../components/ContactForm";
+
+const contactPhotos = [
+  "/img/servicios/Contactanos.png",
+];
 
 export default function Contact() {
   return (
@@ -31,7 +34,17 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="container" style={{ padding: "26px 0 36px" }}>
+      {/* === Franja de imágenes sobre el formulario === */}
+      <section className="container contact-photos">
+        <div className="contact-photos-row">
+          <figure className="contact-photo">
+            <img src="/img/Contacto/Contactanos.png" alt="Soporte FixPC" />
+          </figure>
+        </div>
+      </section>
+
+      {/* === Formulario + info === */}
+      <section className="container" style={{ padding: "10px 0 36px" }}>
         <div className="grid" style={{ gridTemplateColumns: "minmax(0,1fr) 380px", gap: 24 }}>
           <div className="card" id="contacto">
             <h3>Solicita tu soporte</h3>

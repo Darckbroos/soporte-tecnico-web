@@ -1,12 +1,12 @@
 // src/pages/ServiceDetail.tsx
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Navigate } from "react-router-dom";
 import { servicios } from "../data/services";
 
 const CONTACT_PHONE_WA = import.meta.env.VITE_CONTACT_PHONE_WA || "56939291484";
 
 // Cambia esto para probar maquetas: "stacked" | "sidebar" | "tabs"
-const LAYOUT: "stacked" | "sidebar" | "tabs" = "stacked";
+const LAYOUT: "stacked" | "sidebar" | "tabs" = "sidebar";
 
 function clp(n?: number) {
   if (n == null) return "";
@@ -29,6 +29,12 @@ export default function ServiceDetail() {
       </main>
     );
   }
+  // 🚫 Si el servicio existe pero está oculto, redirigimos
+
+  if (s.oculto) {
+    return <Navigate to="/servicios" replace />;
+  }
+
 
   const waUrl = `https://wa.me/${CONTACT_PHONE_WA}?text=${encodeURIComponent(
     `Hola, quiero cotizar: ${s.titulo}`
@@ -77,57 +83,69 @@ export default function ServiceDetail() {
     </div>
   );
 
-  const Subservicios =
-    s.subservicios && s.subservicios.length > 0 ? (
-      <div className="card">
-        <h3>Subservicios y precios</h3>
+const Subservicios =
+  s.subservicios && s.subservicios.length > 0 ? (
+    <div className="card">
+      <h3>Subservicios y precios</h3>
+      <div
+        style={{
+          border: "1px solid rgba(15,23,42,.08)",
+          borderRadius: 12,
+          overflow: "hidden",
+        }}
+      >
+        {/* Encabezado */}
         <div
           style={{
-            border: "1px solid rgba(15,23,42,.08)",
-            borderRadius: 12,
-            overflow: "hidden",
+            display: "grid",
+            gridTemplateColumns: "minmax(0,1.6fr) minmax(0,.8fr)",
+            background: "#f8fafc",
+            fontWeight: 600,
+            padding: "10px 14px",
           }}
         >
+          <div>Trabajo</div>
+          <div style={{ textAlign: "right" }}>Precio (CLP)</div> {/* <- aquí */}
+        </div>
+
+        {/* Filas */}
+        {s.subservicios.map((ss: any, i: number) => (
           <div
+            key={i}
+            className="sub-row" // <- para CSS
             style={{
               display: "grid",
               gridTemplateColumns: "minmax(0,1.6fr) minmax(0,.8fr)",
-              background: "#f8fafc",
-              fontWeight: 600,
               padding: "10px 14px",
+              borderTop: "1px solid rgba(15,23,42,.06)",
+              alignItems: "end", // <- alinea abajo
+              gap: 8,
             }}
           >
-            <div>Trabajo</div>
-            <div style={{ textAlign: "right" }}>Rango precio (CLP)</div>
-          </div>
-          {s.subservicios.map((ss, i) => (
-            <div
-              key={i}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "minmax(0,1.6fr) minmax(0,.8fr)",
-                padding: "10px 14px",
-                borderTop: "1px solid rgba(15,23,42,.06)",
-                alignItems: "center",
-              }}
-            >
-              <div>
-                <div style={{ fontWeight: 600 }}>{ss.nombre}</div>
-                {ss.descripcion && (
-                  <div style={{ color: "#64748b", fontSize: ".95rem", marginTop: 4 }}>
-                    {ss.descripcion}
-                  </div>
-                )}
-              </div>
-              <div style={{ textAlign: "right", fontWeight: 600 }}>
-                {ss.desde ? clp(ss.desde) : "—"}
-                {ss.hasta ? ` – ${clp(ss.hasta)}` : ""}
-              </div>
+            <div>
+              <div style={{ fontWeight: 600 }}>{ss.nombre}</div>
+              {ss.descripcion && (
+                <div style={{ color: "#64748b", fontSize: ".95rem", marginTop: 4 }}>
+                  {ss.descripcion}
+                </div>
+              )}
             </div>
-          ))}
-        </div>
+
+            {/* Celda precio fija/ rango (por compatibilidad) */}
+            <div className="price-cell" style={{ fontWeight: 600 }}>
+              {ss.precio != null
+                ? clp(ss.precio)
+                : ss.desde != null && ss.hasta == null
+                ? clp(ss.desde)
+                : ss.desde != null && ss.hasta != null
+                ? `${clp(ss.desde)} – ${clp(ss.hasta)}`
+                : "—"}
+            </div>
+          </div>
+        ))}
       </div>
-    ) : null;
+    </div>
+  ) : null;
 
   const Beneficios =
     s.beneficios && s.beneficios.length > 0 ? (
@@ -236,48 +254,55 @@ export default function ServiceDetail() {
   );
 
   // ---- MAQUETA B: SIDEBAR ----
-  const LayoutSidebar = () => (
-    <main className="container">
-      <section className="hero">
-        <div className="grid" style={{ gridTemplateColumns: "minmax(0,1fr) 360px", gap: 24 }}>
-          <div>
-            {s.hero && (
-              <img
-                src={s.hero}
-                alt={s.titulo}
-                style={{
-                  width: "100%",
-                  height: 220,
-                  objectFit: "cover",
-                  borderRadius: 16,
-                  marginBottom: 16,
-                  boxShadow: "0 8px 30px -12px rgba(2,6,23,.25)",
-                }}
-              />
-            )}
-            <h1>{s.titulo}</h1>
-            <p style={{ color: "#475569" }}>{s.extracto}</p>
-            {Price}
-            {Ctas}
-          </div>
+const LayoutSidebar = () => (
+  <main className="container">
+    {/* HERO arriba, sin sidebar */}
+    <section className="hero">
+      <div style={{ maxWidth: 980, margin: "0 auto" }}>
+        {s.hero && (
+          <img
+            src={s.hero}
+            alt={s.titulo}
+            style={{
+              width: "100%",
+              height: 220,
+              objectFit: "cover",
+              borderRadius: 16,
+              marginBottom: 16,
+              boxShadow: "0 8px 30px -12px rgba(2,6,23,.25)",
+            }}
+          />
+        )}
+        <h1>{s.titulo}</h1>
+        <p style={{ color: "#475569" }}>{s.extracto}</p>
+        {Price}
+        {Ctas}
+      </div>
+    </section>
 
-          <aside className="card">
-            {Perfiles || <p style={{ color: "#64748b" }}>Sin perfiles definidos</p>}
-          </aside>
-        </div>
-      </section>
-
-      <section className="services">
-        <div style={{ maxWidth: 980, margin: "0 auto" }}>
+    {/* CONTENIDO + GALERÍA A LA DERECHA */}
+    <section className="services">
+      <div className="service-layout">
+        <div className="service-main">
           {Incluye}
           {Subservicios}
           {Beneficios}
-          {Galeria}
           {Extras}
         </div>
-      </section>
-    </main>
-  );
+
+        <aside className="service-aside">
+          <div className="gallery-vert">
+            {s.galeria?.map((src, i) => (
+              <figure key={i} className="gallery-vert-item">
+                <img className="gallery-img" src={src} alt={`Trabajo ${i + 1}`} loading="lazy" />
+              </figure>
+            ))}
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+);
 
   // ---- MAQUETA C: TABS ----
   const LayoutTabs = () => {

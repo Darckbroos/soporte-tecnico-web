@@ -24,10 +24,21 @@ export default function About() {
       >
         <div className="container">
           <h1 style={{ marginBottom: 10 }}>Sobre nosotros</h1>
-          <p style={{ color: "#475569", maxWidth: 820 }}>
-            En <b>FixPC</b> ofrecemos soporte técnico confiable y rápido. Nos enfocamos en
-            diagnósticos honestos, transparencia de precios y soluciones que alargan
-            la vida útil de tus equipos. Nuestro compromiso es resolver a tiempo y bien.
+          <p style={{color:'#475569', marginBottom:12}}>
+            En <b>FixPC</b> entregamos soporte técnico confiable y rápido en Santiago, 
+            con un equipo comprometido en brindar soluciones que marquen la diferencia. 
+            Nuestro trabajo se basa en honestidad, transparencia y compromiso real con cada cliente,
+            porque entendemos lo valioso que es tu tiempo y lo importante que son tus equipos en tu vida diaria o en tu negocio.
+          </p>
+          <p style={{color:'#475569', marginBottom:12}}>
+            Nos especializamos en realizar diagnósticos claros y explicar cada paso del proceso, 
+            para que siempre tengas la tranquilidad de saber qué hacemos y por qué. Además, 
+            ofrecemos precios justos y sin sorpresas, porque creemos que la confianza se construye con transparencia.
+          </p>
+          <p style={{color:'#475569', marginBottom:12}}>
+            Nuestro objetivo es más que reparar: buscamos mejorar el rendimiento y alargar la vida útil de tus equipos, 
+            entregándote un servicio profesional que te dé seguridad y tranquilidad. En FixPC no solo encontrarás soporte técnico, 
+            sino también un aliado en quien confiar.
           </p>
 
           <div style={{ display: "flex", gap: 12, marginTop: 16, flexWrap: "wrap" }}>
@@ -53,15 +64,20 @@ export default function About() {
           <div className="card">
             <h2 style={{ marginBottom: 8 }}>Misión</h2>
             <p style={{ color: "#475569" }}>
-              Proporcionar soporte técnico cercano y eficiente, optimizando el rendimiento
-              de cada computador y acompañando a nuestros clientes con educación y buenas prácticas.
+              En <b>FixPC</b> nuestra misión es dar un soporte técnico rápido, 
+              confiable y cercano, ayudando a que cada computador funcione mejor y dure más tiempo. 
+              Nos preocupamos de entregar diagnósticos claros, precios justos y soluciones sin enredos,
+              enseñando a nuestros clientes buenas prácticas para cuidar sus equipos.
             </p>
           </div>
           <div className="card">
             <h2 style={{ marginBottom: 8 }}>Visión</h2>
             <p style={{ color: "#475569" }}>
-              Ser referentes en Chile por calidad, tiempos de respuesta e impulso a la economía
-              circular del hardware, priorizando reparación responsable por sobre el descarte.
+              En <b>FixPC</b> buscamos crecer día a día como un servicio técnico de confianza para las personas y empresas que atendemos, 
+              destacando por la calidad y rapidez de nuestro trabajo. 
+              Creemos en arreglar antes que botar, 
+              dándole más vida a los computadores y evitando basura tecnológica, 
+              para así cuidar tu bolsillo y también el medioambiente.
             </p>
           </div>
         </div>
@@ -74,19 +90,19 @@ export default function About() {
           <div className="card">
             <h3>✔ Diagnóstico honesto</h3>
             <p style={{ color: "#475569" }}>
-              Te explicamos el problema en lenguaje claro y te damos alternativas con costos reales.
+              Explicamos el problema en palabras simples y te damos opciones claras, sin cobros sorpresa.
             </p>
           </div>
           <div className="card">
             <h3>✔ Respuesta rápida</h3>
             <p style={{ color: "#475569" }}>
-              Atención remota o presencial según tu necesidad, con seguimiento hasta cerrar el caso.
+              Sabemos lo importante que es tu computador, por eso damos soluciones ágiles y hacemos seguimiento hasta dejarlo funcionando.
             </p>
           </div>
           <div className="card">
             <h3>✔ Buenas prácticas</h3>
             <p style={{ color: "#475569" }}>
-              Limpieza adecuada, respaldo cuando corresponde y pruebas antes de entregar.
+              Cuidamos tus equipos con limpiezas, respaldos y pruebas antes de entregarlos, para que duren más y rindan mejor.
             </p>
           </div>
         </div>

@@ -1,19 +1,37 @@
 import { Link } from "react-router-dom";
 import { Service } from "../data/services";
 
-export default function ServiceCard({ s }: { s: Service }) {
+type Props = {
+  s: Service;
+  /** si true, usa la miniatura alta (para /servicios) */
+  bigThumb?: boolean;
+};
+
+export default function ServiceCard({ s, bigThumb = false }: Props) {
+  const thumbClass = `service-thumb ${bigThumb ? "service-thumb--lg" : ""}`;
+
   return (
-    <div className="card">
-      <h3 style={{marginBottom:8}}>{s.titulo}</h3>
-      <p style={{color:"#475569"}}>{s.extracto}</p>
-      <div style={{marginTop:10, fontSize:14, color:"#475569"}}>
-        <b>CLP</b> {s.precioDesde.toLocaleString()} – {s.precioHasta.toLocaleString()}
+    <article className="card service-card hover-up">
+      {/* imagen de cabecera */}
+      {s.cover ? (
+        <img src={s.cover} alt={s.titulo} className={thumbClass} />
+      ) : null}
+
+      <h3 className="service-title">{s.titulo}</h3>
+      <p className="muted">{s.extracto}</p>
+
+      <div className="chip" style={{ marginTop: 10 }}>
+        CLP {s.precioDesde.toLocaleString()} – {s.precioHasta.toLocaleString()}
       </div>
-      <div style={{marginTop:12}}>
-        <Link to={`/servicios/${s.slug}`} className="btn" style={{background:"#0ea5e9"}}>
-          Ver detalle
-        </Link>
+
+      <ul className="bullets">
+        {s.incluye.slice(0, 2).map((i, idx) => <li key={idx}>{i}</li>)}
+      </ul>
+
+      <div className="card-footer">
+        <Link to={`/servicios/${s.slug}`} className="btn">Ver detalle</Link>
+        <Link className="btn btn-outline" to="/contacto">Solicitar</Link>
       </div>
-    </div>
+    </article>
   );
 }
