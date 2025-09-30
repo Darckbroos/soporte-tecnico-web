@@ -1,3 +1,4 @@
+# backend/app/utils/mailer.py
 import smtplib, ssl
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -19,7 +20,6 @@ def build_lead_email(lead) -> tuple[str, str]:
     return subject, html
 
 def send_email(*, subject: str, html: str, to: str | None = None) -> None:
-    """Envía un correo en un hilo (lo llamamos desde BackgroundTasks)."""
     to_addr = to or settings.notify_email
     if not to_addr:
         print("[mailer] Falta NOTIFY_EMAIL; no se envía.")
@@ -32,9 +32,12 @@ def send_email(*, subject: str, html: str, to: str | None = None) -> None:
     msg.attach(MIMEText(html, "html"))
 
     context = ssl.create_default_context()
-    with smtplib.SMTP(settings.smtp_host, settings.smtp_port) as server:
-        server.starttls(context=context)
-        server.login(settings.smtp_user, settings.smtp_pass)
-        server.sendmail(msg["From"], [to_addr], msg.as_string())
-
-    print(f"[mailer] Correo enviado OK a {to_addr}")
+    try:
+        with smtplib.SMTP(settings.smtp_host, settings.smtp_port) as server:
+            server.starttls(context=context)
+            server.login(settings.smtp_user, settings.smtp_pass)
+            server.sendmail(msg["From"], [to_addr], msg.as_string())
+        print(f"[mailer] Correo enviado OK a {to_addr}")
+    except Exception as e:
+        # Deja el error visible en logs
+        print(f"[mailer] ERROR enviando correo: {type(e).__name__}: {e}")

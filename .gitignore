@@ -15,6 +15,9 @@ pnpm-debug.log*
 .env.*
 !.env.example
 
+# DB local
+backend/dev.db
+
 # Editores / SO
 .vscode/
 .idea/
