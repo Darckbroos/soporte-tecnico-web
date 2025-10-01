@@ -1,9 +1,7 @@
 # backend/app/utils/mailer.py
 import smtplib, ssl, traceback
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from ..settings import settings
-
+from email.message import EmailMessage  # ← FALTABA ESTA LÍNEA
+from app.settings import settings
 
 def build_lead_email(lead):
     subject = f"{settings.email_subject_prefix} Nuevo lead: {lead.nombre}"
@@ -22,7 +20,6 @@ def build_lead_email(lead):
     return subject, html
 
 def send_email(subject: str, html: str, to: str):
-    """Envía el correo y LOGUEA cualquier excepción (para verla en `docker compose logs backend`)."""
     try:
         msg = EmailMessage()
         msg["Subject"] = subject
