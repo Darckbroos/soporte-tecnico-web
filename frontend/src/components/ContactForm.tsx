@@ -23,7 +23,7 @@ export default function ContactForm() {
     setSending(true);
     setStatus("Enviando…");
     try {
-      await axios.post(`${API_BASE}/leads`, { ...form, source: "contacto" });
+      await axios.post(`${API_BASE}leads`, { ...form, source: "contacto" });
       setStatus("¡Recibido! Te contactaremos pronto.");
       setForm({ name: "", email: "", phone: "", message: "" });
     } catch {

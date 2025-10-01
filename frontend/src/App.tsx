@@ -34,7 +34,7 @@ export default function App(){
     e.preventDefault()
     setStatus('Enviando...')
     try{
-      await axios.post(`${API_BASE}/leads`, { ...form, source:'landing' })
+      await axios.post(`${API_BASE}leads`, { ...form, source:'landing' })
       setStatus('¡Recibido! Te contactaremos pronto.')
       setForm({ name:'', email:'', phone:'', city:'', message:'' })
     }catch(err:any){
