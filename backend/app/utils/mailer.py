@@ -4,16 +4,18 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from ..settings import settings
 
-def build_lead_email(lead) -> tuple[str, str]:
-    subject = f"[FixPC] Nueva solicitud de soporte: {lead.name}"
+def build_lead_email(lead):
+    subject = f"{settings.email_subject_prefix} Nuevo lead: {lead.nombre}"
     html = f"""
-    <h2>Nueva solicitud</h2>
+    <h2>Nuevo lead desde la web</h2>
     <ul>
-      <li><b>Nombre:</b> {lead.name}</li>
-      <li><b>Email:</b> {lead.email}</li>
-      <li><b>Teléfono:</b> {lead.phone or '-'}</li>
-      <li><b>Ciudad:</b> {lead.city or '-'}</li>
-      <li><b>Fuente:</b> {lead.source or '-'}</li>
+      <li><b>Nombre:</b> {lead.nombre}</li>
+      <li><b>Correo:</b> {lead.correo}</li>
+      <li><b>Teléfono:</b> {lead.telefono or '-'}</li>
+      <li><b>Comuna:</b> {lead.comuna or '-'}</li>
+      <li><b>Mensaje:</b><br/>{lead.mensaje}</li>
+      <li><b>Fuente:</b> {lead.source or 'web'}</li>
+      <li><b>Fecha:</b> {lead.created_at}</li>
     </ul>
     <p>{lead.message}</p>
     """
