@@ -116,7 +116,7 @@ export const servicios: Service[] = [
       "Resolución de fallas comunes",
       "Optimización de rendimiento",
     ],
-    cover: "/public/img/servicios/Soporteti.jpg",
+    cover: "/public/img/servicios/Soporteti.png",
     galeria: [
       "/img/servicios/SoporteTi3.png",
       "/img/servicios/SoporteTi2.png",
@@ -209,11 +209,11 @@ export const servicios: Service[] = [
       "Capacitación breve para editar contenidos",
       "30 días de soporte post-lanzamiento",
     ],
-    cover: "/img/servicios/Programacion.jpg",
+    cover: "/img/servicios/Programacion.png",
 
     galeria: [
-      "/img/servicios/Paginaweb.jpg",
-      "/img/servicios/Paginaweb2.jpg",
+      "/img/servicios/Paginaweb.png",
+      "/img/servicios/Paginaweb2.png",
       "/img/servicios/Paginasweb2.png",
     ],
     beneficios: [

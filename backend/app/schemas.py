@@ -5,7 +5,7 @@ from pydantic import BaseModel, EmailStr, Field, ConfigDict  # 👈 importa Conf
 class LeadIn(BaseModel):
     # alias en español
     nombre: str = Field(..., min_length=2, max_length=120)
-    correo: EmailStr = 
+    correo: EmailStr 
     telefono: Optional[str] 
     Comuna: Optional[str] 
     mensaje: str = Field(..., min_length=5, max_length=2000)
