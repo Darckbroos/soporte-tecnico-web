@@ -1,47 +1,57 @@
-
+version: "3.9"
 
 services:
   db:
     image: postgres:16-alpine
     container_name: soporte_db
+
     environment:
       POSTGRES_DB: soporte
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      TZ: UTC
+
+    shm_size: "256m"
+
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./ops/postgresql.conf:/etc/postgresql/postgresql.conf:ro   # <- NUEVO
-    command: ["postgres","-c","config_file=/etc/postgresql/postgresql.conf"]  # <- NUEVO
-    shm_size: "256m"
-    ports:
-      - "127.0.0.1:5432:5432"
+      - ./ops/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+
+    command:
+      - postgres
+      - -c
+      - listen_addresses=*
+      - -c
+      - hba_file=/etc/postgresql/pg_hba.conf
+
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB} || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
+
     restart: unless-stopped
 
   backend:
-      build: ./backend
-      container_name: soporte_backend
-      env_file:
-        - ./backend/.env
-      depends_on:
-        db:
-          condition: service_healthy
-      ports:
-        - "127.0.0.1:8000:8000"
-      restart: unless-stopped
-      command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2
+    build: ./backend
+    container_name: soporte_backend
+    env_file:
+      - ./backend/.env
+    depends_on:
+      db:
+        condition: service_healthy
+    # Para debug local desde el host; en el servidor sigue sin ser público.
+    ports:
+      - "127.0.0.1:8000:8000"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2
+    restart: unless-stopped
 
   frontend:
     build: ./frontend
     container_name: soporte_frontend
-    environment:
-      VITE_API_BASE: "http://localhost:8001"
+    # Puerto configurable con variables para local/servidor
     ports:
-      - "127.0.0.1:8080:80"
+      - "${FRONTEND_BIND_ADDRESS:-127.0.0.1}:${FRONTEND_HTTP_PORT:-8080}:80"
     depends_on:
       - backend
     restart: unless-stopped
