@@ -55,7 +55,7 @@ export const servicios: Service[] = [
       "Ajustes/instalación de sistema y drivers",
       "Pruebas finales e informe",
     ],
-    cover: "/public/img/servicios/Mantenimiento1.png",
+    cover: "/img/servicios/Mantenimiento1.png",
 
     galeria: [
       "/img/servicios/limpieza2.png",
@@ -116,7 +116,7 @@ export const servicios: Service[] = [
       "Resolución de fallas comunes",
       "Optimización de rendimiento",
     ],
-    cover: "/public/img/servicios/Soporteti.png",
+    cover: "/img/servicios/Soporteti.png",
     galeria: [
       "/img/servicios/SoporteTi3.png",
       "/img/servicios/SoporteTi2.png",
