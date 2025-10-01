@@ -33,9 +33,10 @@ def health():
 @app.post("/leads", response_model=schemas.LeadOut)
 def create_lead(
     lead: schemas.LeadIn,
-    background_tasks: BackgroundTasks,        # 👈 nuevo
+    background_tasks: BackgroundTasks,      
     db: Session = Depends(get_db)
 ):
+    # Evitar duplicados simples
     existing = db.query(models.Lead).filter(
         models.Lead.email == lead.email,
         models.Lead.message == lead.message
