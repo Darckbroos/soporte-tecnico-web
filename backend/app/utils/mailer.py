@@ -21,25 +21,30 @@ def build_lead_email(lead):
     """
     return subject, html
 
-def send_email(*, subject: str, html: str, to: str | None = None) -> None:
-    to_addr = to or settings.notify_email
-    if not to_addr:
-        print("[mailer] Falta NOTIFY_EMAIL; no se envía.")
-        return
+def send_email(subject, html, to):
+    host = settings.smtp_host
+    port = settings.smtp_port
+    user = settings.smtp_user
+    pwd  = settings.smtp_pass
+    from_email = user
 
-    msg = MIMEMultipart("alternative")
-    msg["From"] = settings.smtp_user or settings.notify_email
-    msg["To"] = to_addr
-    msg["Subject"] = subject
-    msg.attach(MIMEText(html, "html"))
+    msg = (
+        f"From: {settings.email_from_name} <{from_email}>\r\n"
+        f"To: {to}\r\n"
+        f"Subject: {subject}\r\n"
+        "MIME-Version: 1.0\r\n"
+        "Content-Type: text/html; charset=utf-8\r\n\r\n"
+        f"{html}"
+    )
 
-    context = ssl.create_default_context()
     try:
-        with smtplib.SMTP(settings.smtp_host, settings.smtp_port) as server:
-            server.starttls(context=context)
-            server.login(settings.smtp_user, settings.smtp_pass)
-            server.sendmail(msg["From"], [to_addr], msg.as_string())
-        print(f"[mailer] Correo enviado OK a {to_addr}")
+        with smtplib.SMTP(host, port, timeout=30) as s:
+            s.set_debuglevel(1)                # <<< log SMTP en los logs del backend
+            s.ehlo()
+            s.starttls(context=ssl.create_default_context())
+            s.ehlo()
+            s.login(user, pwd)
+            s.sendmail(from_email, [to], msg)
     except Exception as e:
-        # Deja el error visible en logs
-        print(f"[mailer] ERROR enviando correo: {type(e).__name__}: {e}")
+        print("[mailer] ERROR:", repr(e))
+        raise
