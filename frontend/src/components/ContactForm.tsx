@@ -38,7 +38,7 @@ export default function ContactForm() {
         nombre: form.nombre.trim(),
         correo: form.correo.trim(),
         telefono: form.telefono.trim() || null,
-        ciudad: form.comuna || null,               // ← aquí el mapeo
+        comuna: form.comuna || null,              // ← aquí el mapeo
         mensaje: form.mensaje.trim(),
         fuente: "web",
       };
