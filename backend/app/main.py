@@ -1,5 +1,5 @@
 # backend/app/main.py
-from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks
+from fastapi import FastAPI, Depends, BackgroundTasks, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from .database import Base, engine, get_db
@@ -13,11 +13,9 @@ print("DB URL:", engine.url)
 if engine.url.drivername.startswith("sqlite"):
     print("SQLite path:", os.path.abspath(engine.url.database))
 
-
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="API Soporte Técnico", version="1.0.0")
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
@@ -26,51 +24,61 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/health")
+# 👉 Todas las rutas con prefijo /api
+api = APIRouter(prefix="/api")
+
+@api.get("/health")
 def health():
     return {"status": "ok", "timestamp": datetime.utcnow().isoformat()}
 
-@app.post("/leads", response_model=schemas.LeadOut)
+@api.post("/leads", response_model=schemas.LeadOut)
 def create_lead(
     lead: schemas.LeadIn,
-    background_tasks: BackgroundTasks,      
-    db: Session = Depends(get_db)
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
 ):
     # Evitar duplicados simples
-    existing = db.query(models.Lead).filter(
-        models.Lead.email == lead.email,
-        models.Lead.message == lead.message
-    ).first()
+    existing = (
+        db.query(models.Lead)
+        .filter(
+            models.Lead.correo == lead.correo,
+            models.Lead.mensaje == lead.mensaje,
+        )
+        .first()
+    )
     if existing:
-        # Igual disparar correo si quieres, o retornar directo
         return existing
 
     obj = models.Lead(
-        name=lead.name.strip(),
-        email=lead.email.strip().lower(),
-        phone=lead.phone.strip() if lead.phone else None,
-        message=lead.message.strip(),
-        city=lead.city.strip() if lead.city else None,
-        source=lead.source.strip() if lead.source else "web"
+        nombre=lead.nombre.strip(),
+        correo=lead.correo.strip().lower(),
+        telefono=lead.telefono.strip() if lead.telefono else None,
+        comuna=lead.comuna.strip() if lead.comuna else None,
+        mensaje=lead.mensaje.strip(),
+        source=(lead.fuente or "web").strip(),
     )
     db.add(obj)
     db.commit()
     db.refresh(obj)
 
-    # Envío de correo en background (no retrasa la respuesta)
+    # Envío email en background
     try:
-        subject, html = build_lead_email(obj)
+        subject, html = build_lead_email(obj)  # Asegúrate de que el mailer soporte los nombres en español
         background_tasks.add_task(
-            send_email,
-            subject=subject,
-            html=html,
-            to=settings.notify_email
+            send_email, subject=subject, html=html, to=settings.notify_email
         )
     except Exception as e:
         print("[mailer] No se pudo programar el envío:", e)
 
     return obj
 
-@app.get("/leads", response_model=list[schemas.LeadOut])
+@api.get("/leads", response_model=list[schemas.LeadOut])
 def list_leads(db: Session = Depends(get_db)):
-    return db.query(models.Lead).order_by(models.Lead.created_at.desc()).limit(100).all()
+    return (
+        db.query(models.Lead)
+        .order_by(models.Lead.created_at.desc())
+        .limit(100)
+        .all()
+    )
+
+app.include_router(api)
