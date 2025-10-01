@@ -5,7 +5,11 @@ import ServiceCard from "./components/ServiceCard";
 import { serviciosOrdenados,servicios  } from "./data/services";
 import HomeServicesStrip from "./components/HomeServicesStrip";
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000'
+const API_BASE_RAW =
+  (import.meta.env as any).VITE_API_URL ||
+  (import.meta.env as any).VITE_API_BASE ||
+  "/api";
+const API_BASE = String(API_BASE_RAW).replace(/\/$/, "");
 
 // === Personalización rápida ===
 // Cambia estos valores desde tu archivo .env de Vite (frontend/.env)
@@ -30,11 +34,23 @@ export default function App(){
     e.preventDefault()
     setStatus('Enviando...')
     try{
-      await axios.post(`${API_BASE}/leads`, { ...form, source:'landing' })
+      const payload = {
+        nombre: form.name.trim(),
+        correo: form.email.trim(),
+        telefono: form.phone.trim() || null,
+        ciudad: form.city.trim() || null,
+        mensaje: form.message.trim(),
+        source: "landing",
+      };
+      await axios.post(`${API_BASE}/leads`, payload, {
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        timeout: 20000,
+      });
       setStatus('¡Recibido! Te contactaremos pronto.')
       setForm({ name:'', email:'', phone:'', city:'', message:'' })
     }catch(err:any){
-      setStatus('Hubo un problema. Intenta nuevamente.')
+      console.error("Landing contact error:", err?.response?.status, err?.response?.data || err?.message);
+      setStatus("Hubo un problema. Intenta nuevamente.");
     }
   }
 
