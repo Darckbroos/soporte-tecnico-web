@@ -27,11 +27,11 @@ app.add_middleware(
 # 👉 Todas las rutas con prefijo /api
 api = APIRouter(prefix="/api")
 
-@api.get("/health")
+@app.get("/api/health")
 def health():
     return {"status": "ok", "timestamp": datetime.utcnow().isoformat()}
 
-@api.post("/leads", response_model=schemas.LeadOut)
+@app.post("/api/leads", response_model=schemas.LeadOut) 
 def create_lead(
     lead: schemas.LeadIn,
     background_tasks: BackgroundTasks,
@@ -65,7 +65,10 @@ def create_lead(
     try:
         subject, html = build_lead_email(obj)  # Asegúrate de que el mailer soporte los nombres en español
         background_tasks.add_task(
-            send_email, subject=subject, html=html, to=settings.notify_email
+            send_email,
+            subject=subject,
+            html=html,
+            to=settings.notify_email
         )
     except Exception as e:
         print("[mailer] No se pudo programar el envío:", e)
