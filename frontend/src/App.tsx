@@ -9,7 +9,7 @@ const API_BASE_RAW =
   (import.meta.env as any).VITE_API_URL ||
   (import.meta.env as any).VITE_API_BASE ||
   "/api";
-const API_BASE = String(API_BASE_RAW).replace(/\/$/, "");
+const API_BASE = String(API_BASE_RAW).replace(/\/$/, ""); // sin slash final
 
 // === Personalización rápida ===
 // Cambia estos valores desde tu archivo .env de Vite (frontend/.env)
@@ -34,23 +34,11 @@ export default function App(){
     e.preventDefault()
     setStatus('Enviando...')
     try{
-      const payload = {
-        nombre: form.name.trim(),
-        correo: form.email.trim(),
-        telefono: form.phone.trim() || null,
-        ciudad: form.city.trim() || null,
-        mensaje: form.message.trim(),
-        source: "landing",
-      };
-      await axios.post(`${API_BASE}/leads`, payload, {
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        timeout: 20000,
-      });
+      await axios.post(`${API_BASE}/leads`, { ...form, source:'landing' })
       setStatus('¡Recibido! Te contactaremos pronto.')
       setForm({ name:'', email:'', phone:'', city:'', message:'' })
     }catch(err:any){
-      console.error("Landing contact error:", err?.response?.status, err?.response?.data || err?.message);
-      setStatus("Hubo un problema. Intenta nuevamente.");
+      setStatus('Hubo un problema. Intenta nuevamente.')
     }
   }
 
