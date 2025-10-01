@@ -1,17 +1,19 @@
+# backend/app/schemas.py
 from typing import Optional
 from datetime import datetime
-from pydantic import BaseModel, EmailStr, Field, ConfigDict
+from pydantic import BaseModel, EmailStr, Field, ConfigDict, AliasChoices
 
 class LeadIn(BaseModel):
-    # acepta ‘name’ o ‘nombre’, etc.
-    nombre:   str      = Field(..., min_length=2, max_length=120, validation_alias='name')
-    correo:   EmailStr = Field(..., validation_alias='email')
-    telefono: Optional[str] = Field(default=None, validation_alias='phone')
-    comuna:   Optional[str] = Field(default=None, validation_alias='city')
-    mensaje:  str      = Field(..., min_length=5, max_length=2000, validation_alias='message')
-    fuente:   Optional[str] = Field(default=None, validation_alias='source')
+    # acepta cualquiera de los dos: español o inglés
+    nombre:   str      = Field(..., min_length=2, max_length=120, validation_alias=AliasChoices('nombre','name'))
+    correo:   EmailStr = Field(..., validation_alias=AliasChoices('correo','email'))
+    telefono: Optional[str] = Field(default=None, validation_alias=AliasChoices('telefono','phone'))
+    comuna:   Optional[str] = Field(default=None, validation_alias=AliasChoices('comuna','city'))
+    mensaje:  str      = Field(..., min_length=5, max_length=2000, validation_alias=AliasChoices('mensaje','message'))
+    fuente:   Optional[str] = Field(default=None, validation_alias=AliasChoices('fuente','source'))
 
-    model_config = ConfigDict(extra="ignore")
+    # MUY IMPORTANTE: acepta también el nombre del campo además del alias
+    model_config = ConfigDict(populate_by_name=True, extra="ignore")
 
 class LeadOut(BaseModel):
     id: int
