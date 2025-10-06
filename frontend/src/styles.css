@@ -269,8 +269,14 @@ input:focus, textarea:focus{
 
 
 /* ===== Pricing ===== */
-.pricing { padding: 28px 0 40px; }
-.pricing-head { max-width: 900px; margin-bottom: 18px; }
+.pricing { 
+  padding: 28px 0 40px; 
+}
+.pricing-head { 
+  max-width: 900px; 
+  margin: 0 auto 18px; /* Centrado */
+  text-align: center; /* Centrado */
+}
 
 .price-grid {
   display: grid;
@@ -291,6 +297,23 @@ input:focus, textarea:focus{
   isolation:isolate;
 }
 
+.price-card--basico {
+  background: #e0f2fe;
+}
+
+.price-card--pro {
+  background: #d1fae5;
+}
+
+.price-card--full {
+  background: #fee2e2;
+}
+
+.price-badge-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
 /* Insignia circular arriba (como la segunda imagen) */
 .price-badge{
   width: 68px; height: 68px;
@@ -303,7 +326,10 @@ input:focus, textarea:focus{
   margin-top: -6px;
 }
 
-.price-title{ margin: 10px 0 2px; }
+.price-title{ 
+  margin: 10px 0 2px; 
+  text-align: center;
+}
 .price-sub{
   font-weight: 600;
   font-size: 13px;
@@ -313,18 +339,25 @@ input:focus, textarea:focus{
   border-radius: 999px;
   display:inline-block;
   padding: 6px 10px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .price-features{
-  margin:14px 0 0; padding-left: 18px;
+  margin:14px 0 0; 
+  padding-left: 0;
   color: var(--muted);
+  text-align: center;
 }
-.price-features li{ margin: 6px 0; }
+.price-features p{ margin: 6px 0; }
 
 .price-actions{
   margin-top:auto;
-  display:flex; gap: 10px; flex-wrap:wrap;
+  display:flex; 
+  gap: 10px; 
+  flex-wrap:wrap;
   padding-top: 12px;
+  justify-content: center;
 }
 
 /* Botón “pronto” deshabilitado */
@@ -771,4 +804,20 @@ select.input-like:focus {
 /* Placeholder "gris" para la opción vacía */
 select.input-like option[value=""] {
   color: #94a3b8; /* slate-400 */
+}
+
+.plans-section {
+  background: #f8fafc;
+  padding: 60px 0;
+  text-align: center;
+}
+
+.plans-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.price-card.highlight {
+  border-color: var(--brand);
+  box-shadow: 0 10px 24px rgba(2, 132, 199, 0.25);
 }

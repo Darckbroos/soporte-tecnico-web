@@ -5,8 +5,8 @@ const PLANES = [
   {
     slug: "basico",
     titulo: "Básico",
-    resumen: "Según cantidad de equipos",
-    icono: "🛡️",
+    resumen: "1-5 equipos",
+    icono: "🥉",
     bullets: [
       "1 visita mensual programada",
       "Chequeo de malware y limpieza",
@@ -18,8 +18,8 @@ const PLANES = [
   {
     slug: "pro",
     titulo: "Pro",
-    resumen: "Según cantidad de equipos",
-    icono: "🚀",
+    resumen: "6-15 equipos",
+    icono: "🥈",
     bullets: [
       "2 visitas mensuales programadas",
       "Limpieza y hardening (descargas/navegación seguras)",
@@ -31,8 +31,8 @@ const PLANES = [
   {
     slug: "full",
     titulo: "Full",
-    resumen: "Según cantidad de equipos",
-    icono: "🏢",
+    resumen: "16+ equipos",
+    icono: "🥇",
     bullets: [
       "4 visitas mensuales programadas",
       "Políticas de respaldo + pruebas de restauración",
@@ -45,34 +45,32 @@ const PLANES = [
 
 export default function SupportPlans() {
   return (
-    <section id="planes" className="container pricing">
+    <section id="planes" className="container pricing plans-section">
       <div className="pricing-head">
-        <h2>Planes de soporte</h2>
+        <h2>Planes de Soporte a tu Medida</h2>
         <p className="muted">
-          Mantenimiento preventivo con visitas programadas, revisión de malware, aplicación
-          de parches, verificación de backups y soporte remoto. El valor depende de la
-          cantidad de equipos y el alcance acordado (los precios unitarios referenciales
-          están en la sección <Link to="/servicios">Servicios</Link>).
+          Mantén tus sistemas funcionando sin interrupciones. Ofrecemos planes flexibles que se adaptan a las necesidades de tu hogar, pyme o empresa.
         </p>
       </div>
 
       <div className="price-grid">
         {PLANES.map((p) => (
-          <article key={p.slug} className="price-card hover-up">
-            <div className="price-badge">{p.icono}</div>
+          <article key={p.slug} className={`price-card hover-up price-card--${p.slug} ${p.slug === 'pro' ? 'highlight' : ''}`}>
+            <div className="price-badge-wrapper">
+                <div className="price-badge">{p.icono}</div>
+            </div>
             <h3 className="price-title">{p.titulo}</h3>
             <div className="price-sub"> {p.resumen} </div>
 
-            <ul className="price-features">
-              {p.bullets.map((b, i) => <li key={i}>{b}</li>)}
-            </ul>
+            <div className="price-features">
+              {p.bullets.map((b, i) => <p key={i}>{b}</p>)}
+            </div>
 
             <div className="price-actions">
               <Link className="btn" to="/contacto" state={{ plan: p.slug }}>
                 Contactarnos
               </Link>
 
-              {/* Botón preparado para integrar pago más adelante */}
               <button
                 className="btn btn-outline soon"
                 type="button"

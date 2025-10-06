@@ -194,7 +194,7 @@ export const servicios: Service[] = [
     slug: "creacion-paginas-web",
     orden: 4,
     titulo: "Creación de páginas web",
-    oculto: true,
+    oculto: false,
     extracto:
       "Sitios modernos, rápidos y medibles con prácticas SEO on-page e integraciones esenciales.",
     // Rango general del servicio (muestra en la card de /servicios)

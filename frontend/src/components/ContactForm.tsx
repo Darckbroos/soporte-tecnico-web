@@ -1,20 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { COMUNAS_RM } from "../data/comunas-rm";
 
 const API_BASE = String(import.meta.env.VITE_API_BASE || "/api").replace(/\/+$/, "");
 const CONTACT_EP = String(import.meta.env.VITE_CONTACT_ENDPOINT || "/leads");
 
-export default function ContactForm() {
+export default function ContactForm({ initialMessage }: { initialMessage?: string }) {
   const [form, setForm] = useState({
     nombre: "",
     correo: "",
     telefono: "",
-    comuna: "",   // 👈 reemplaza ciudad por comuna
-    mensaje: "",
+    comuna: "",
+    mensaje: initialMessage || "",
   });
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (initialMessage) {
+      setForm((prevForm) => ({ ...prevForm, mensaje: initialMessage }));
+    }
+  }, [initialMessage]);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -33,12 +39,11 @@ export default function ContactForm() {
     setSending(true);
     setStatus("Enviando…");
     try {
-      // ⚠️ Backend sigue esperando "ciudad": mapeamos comuna -> ciudad
       const payload = {
         nombre: form.nombre.trim(),
         correo: form.correo.trim(),
         telefono: form.telefono.trim() || null,
-        comuna: form.comuna || null,              // ← aquí el mapeo
+        comuna: form.comuna || null,
         mensaje: form.mensaje.trim(),
         fuente: "web",
       };
@@ -96,11 +101,10 @@ export default function ContactForm() {
         />
       </div>
 
-      {/* 👉 Campo Comuna (selector) */}
       <div>
         <label>Comuna (opcional)</label>
         <select
-          className="input-like"            // 👈 aplica el estilo
+          className="input-like"
           value={form.comuna}
           onChange={(e) => setForm({ ...form, comuna: e.target.value })}
         >
