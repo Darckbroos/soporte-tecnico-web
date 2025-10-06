@@ -88,7 +88,7 @@ export default function App(){
 
               <p className="about-text">
                 Nos especializamos en diagnósticos claros y explicamos cada paso,
-                para que siempre sepas qué hacemos y por qué. Además, ofrecemos precios
+                para que siempre sepas qué hacemos y porque. Además, ofrecemos precios
                 justos y sin sorpresas, porque creemos que la confianza se construye
                 con transparencia.
               </p>
@@ -127,7 +127,7 @@ export default function App(){
                   <span className="kicker">FixPC</span>
                   <h2 style={{ margin: "6px 0 8px" }}>¿Por qué elegirnos?</h2>
                   <p className="muted" style={{ marginTop: 15 }}>
-                    En <b>FixPC</b> trabajamos con responsabilidad, transparencia y compromiso total hacia nuestros clientes. Ofrecemos diagnósticos claros y soluciones efectivas, con precios justos y sin sorpresas, porque creemos que la confianza se gana con honestidad.
+                    En <b>FixPC</b> trabajamos con responsabilidad, transparencia y compromiso total hacia nuestros clientes. Ofrecemos diagnósticos claros, soluciones efectivas, con precios justos y sin sorpresas, porque creemos que la confianza se gana con honestidad.
 
                   </p>
                   <p className="muted" style={{ marginTop: 10 }}>
