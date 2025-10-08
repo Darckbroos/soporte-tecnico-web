@@ -1,10 +1,33 @@
 import { Link } from "react-router-dom";
 import { SEO } from "../components/SEO";
+import { FaInstagram, FaFacebook } from "react-icons/fa";
+import { useState } from 'react';
 
 const BRAND_NAME = import.meta.env.VITE_BRAND_NAME || "FixPC — Soporte Técnico";
 const CONTACT_PHONE_WA = import.meta.env.VITE_CONTACT_PHONE_WA || "56939291484";
 
 export default function About() {
+  const [isInstagramHovered, setInstagramHovered] = useState(false);
+  const [isFacebookHovered, setFacebookHovered] = useState(false);
+
+  const instagramButtonStyle = {
+    background: isInstagramHovered ? '#E4405F' : 'rgba(255,255,255,0.1)',
+    border: '1px solid rgba(255,255,255,0.2)',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    transition: 'background 0.3s ease',
+  };
+
+  const facebookButtonStyle = {
+    background: isFacebookHovered ? '#1877F2' : 'rgba(255,255,255,0.1)',
+    border: '1px solid rgba(255,255,255,0.2)',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    transition: 'background 0.3s ease',
+  };
+
   return (
     <main>
       <SEO
@@ -105,6 +128,44 @@ export default function About() {
               Cuidamos tus equipos con limpiezas, respaldos y pruebas antes de entregarlos, para que duren más y rindan mejor.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Redes Sociales */}
+      <section className="container" style={{ padding: "32px 0" }}>
+        <div className="card" style={{ 
+          background: "linear-gradient(to right, #c13584, #3b5998)", 
+          border: "none",
+          padding: "32px 24px"
+        }}>
+            <h2 style={{ marginBottom: 12, textAlign: 'center', color: '#fff' }}>¡Síguenos en nuestras redes!</h2>
+            <p style={{color: '#fff', opacity: 0.9, textAlign: 'center', marginBottom: 24}}>Mantente al día con nuestras novedades y consejos.</p>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
+              <a
+                href="https://www.instagram.com/fixpc.support.chile/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn"
+                style={instagramButtonStyle}
+                onMouseEnter={() => setInstagramHovered(true)}
+                onMouseLeave={() => setInstagramHovered(false)}
+              >
+                <FaInstagram />
+                <span>Instagram</span>
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61581639582521"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn"
+                style={facebookButtonStyle}
+                onMouseEnter={() => setFacebookHovered(true)}
+                onMouseLeave={() => setFacebookHovered(false)}
+              >
+                <FaFacebook />
+                <span>Facebook</span>
+              </a>
+            </div>
         </div>
       </section>
 

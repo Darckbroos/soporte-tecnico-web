@@ -1,6 +1,8 @@
 import { useLocation } from "react-router-dom";
 import { CONTACT } from "../utils/contact";
 import ContactForm from "../components/ContactForm";
+import { FaInstagram, FaFacebook } from "react-icons/fa";
+import { useState } from 'react';
 
 const contactPhotos = ["/img/servicios/Contactanos.png"];
 
@@ -56,6 +58,29 @@ export default function Contact() {
   const location = useLocation();
   const planSlug = location.state?.plan;
   const plan = planSlug ? PLANES[planSlug] : null;
+
+  const [isInstagramHovered, setInstagramHovered] = useState(false);
+  const [isFacebookHovered, setFacebookHovered] = useState(false);
+
+  const instagramButtonStyle = {
+    background: isInstagramHovered ? '#E4405F' : 'transparent',
+    color: isInstagramHovered ? '#fff' : '#475569',
+    border: `1px solid ${isInstagramHovered ? '#E4405F' : '#e2e8f0'}`,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    transition: 'all 0.3s ease',
+  };
+
+  const facebookButtonStyle = {
+    background: isFacebookHovered ? '#1877F2' : 'transparent',
+    color: isFacebookHovered ? '#fff' : '#475569',
+    border: `1px solid ${isFacebookHovered ? '#1877F2' : '#e2e8f0'}`,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    transition: 'all 0.3s ease',
+  };
 
   return (
     <main>
@@ -176,6 +201,30 @@ export default function Contact() {
                 rel="noreferrer"
               >
                 Ver en Maps
+              </a>
+              <a
+                href="https://www.instagram.com/fixpc.support.chile/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn"
+                style={instagramButtonStyle}
+                onMouseEnter={() => setInstagramHovered(true)}
+                onMouseLeave={() => setInstagramHovered(false)}
+              >
+                <FaInstagram />
+                <span>Instagram</span>
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61581639582521"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn"
+                style={facebookButtonStyle}
+                onMouseEnter={() => setFacebookHovered(true)}
+                onMouseLeave={() => setFacebookHovered(false)}
+              >
+                <FaFacebook />
+                <span>Facebook</span>
               </a>
             </div>
           </aside>
