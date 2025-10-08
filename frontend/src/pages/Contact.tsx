@@ -113,7 +113,7 @@ export default function Contact() {
                 Pago anual de ${plan.precioAnual} (equivale a ${plan.precio} mensual)
               </div>
 
-              <div className="price-features" style={{ marginTop: 16 }}>
+              <div className-="price-features" style={{ marginTop: 16 }}>
                 {plan.servicios.map((s, i) => (
                   <p key={i}>{s}</p>
                 ))}
@@ -124,10 +124,7 @@ export default function Contact() {
       )}
 
       <section className="container" style={{ padding: "10px 0 36px" }}>
-        <div
-          className="grid"
-          style={{ gridTemplateColumns: "minmax(0,1fr) 380px", gap: 24 }}
-        >
+        <div className="contact-grid">
           <div className="card" id="contacto">
             <h3>Solicita tu soporte</h3>
             <ContactForm initialMessage={plan?.mensaje} />

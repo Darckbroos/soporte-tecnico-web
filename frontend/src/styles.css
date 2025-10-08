@@ -821,3 +821,14 @@ select.input-like option[value=""] {
   border-color: var(--brand);
   box-shadow: 0 10px 24px rgba(2, 132, 199, 0.25);
 }
+
+.contact-grid {
+  display: grid;
+  gap: 24px;
+}
+
+@media (min-width: 840px) {
+  .contact-grid {
+    grid-template-columns: minmax(0, 1fr) 380px;
+  }
+}

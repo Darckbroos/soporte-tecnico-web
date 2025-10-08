@@ -11,11 +11,13 @@ import Plans from "./pages/Plans";
 import "./styles.css";
 import { SEOProvider } from "./components/SEO";
 import Layout from "./components/Layout";
+import ScrollToTop from "./components/ScrollToTop";
 
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <SEOProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<App />} />
