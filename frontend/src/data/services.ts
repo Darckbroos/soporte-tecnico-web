@@ -199,7 +199,7 @@ export const servicios: Service[] = [
       "Sitios modernos, rápidos y medibles con prácticas SEO on-page e integraciones esenciales.",
     // Rango general del servicio (muestra en la card de /servicios)
     precioDesde: 250000,
-    precioHasta: 1800000,
+    precioHasta: 1500000,
 
     incluye: [
       "Diseño responsive (móvil/desktop)",
@@ -232,20 +232,20 @@ export const servicios: Service[] = [
       },
       {
         nombre: "Sitio multipágina (4–10 secciones)",
-        desde: 450000,
-        hasta: 900000,
+        desde: 400000,
+        hasta: 800000,
         descripcion: "Home, servicios, portafolio/blog básico y contacto. SEO on-page y medición.",
       },
       {
         nombre: "E-commerce básico",
-        desde: 900000,
-        hasta: 1800000,
+        desde: 500000,
+        hasta: 1500000,
         descripcion: "Catálogo, carrito, pasarela de pago, envíos y estados de pedido. Capacitación incluida.",
       },
       {
         nombre: "Optimización de performance/SEO on-page",
-        desde: 150000,
-        hasta: 350000,
+        desde: 100000,
+        hasta: 300000,
         descripcion: "Mejoras Core Web Vitals, metadatos, schema y caching.",
       },
       {
