@@ -35,7 +35,7 @@ export type Service = {
   cover?: string;
 
 
-  oculto?: boolean;   
+  oculto?: boolean;
 };
 
 export const servicios: Service[] = [
@@ -97,7 +97,7 @@ export const servicios: Service[] = [
       },
     ],
     notaPrecios:
-      "Precios referenciales por mano de obra. Los repuestos se cotizan aparte según stock y marca del equipo.",
+      "Precios referenciales por mano de obra. Los repuestos se cotizan aparte. <br><b>Visita a domicilio: +$10.000 a $15.000 según comuna.</b>",
   },
 
   // Soporte IT (sin cambios funcionales)
@@ -167,7 +167,7 @@ export const servicios: Service[] = [
       },
     ],
     notaPrecios:
-      "Valores por mano de obra. Visita a domicilio dentro de Santiago (anillo Vespucio): +CLP 10.000. Fuera del anillo o urgencias fuera de horario: a convenir.",
+      "Valores por mano de obra. <br><b>Visita a domicilio: +$10.000 a $15.000 según comuna.</b>",
     planes: [
       {
         nombre: "Bolsa Remota 3h",
@@ -351,10 +351,10 @@ export const servicios: Service[] = [
         descripcion: "Incluido cuando realizamos el armado e instalación.",
       },
     ],
-    
-    
+
+
     notaPrecios:
-      "Valores por mano de obra. Los componentes se cotizan aparte según stock/marcas preferidas.",
+      "Valores por mano de obra. Los componentes se cotizan aparte. <br><b>Visita a domicilio: +$10.000 a $15.000 según comuna.</b>",
     icono: "🧰",
     planes: [
       {
@@ -378,7 +378,7 @@ export const servicios: Service[] = [
         resumen: "Edición de video, modelado 3D, IA, CAD.",
       },
     ],
-    
+
   },
 ];
 export function serviciosOrdenados(opts: { incluirOcultos?: boolean } = {}) {

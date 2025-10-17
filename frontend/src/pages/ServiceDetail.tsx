@@ -62,7 +62,25 @@ export default function ServiceDetail() {
         CLP {clp(s.precioDesde)} – {clp(s.precioHasta)}
       </div>
       {s.notaPrecios && (
-        <p style={{ marginTop: 6, color: "#64748b", fontSize: 13 }}>* {s.notaPrecios}</p>
+        <div
+          style={{
+            background: "linear-gradient(to right, #d4edda, #fff3cd)",
+            padding: "12px 16px",
+            borderRadius: 8,
+            marginTop: 12,
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+            color: "#333",
+            border: "1px solid #c3e6cb"
+          }}
+        >
+          <span style={{ fontSize: 24 }}>⚠️</span>
+          <p
+            style={{ margin: 0, fontSize: 13 }}
+            dangerouslySetInnerHTML={{ __html: `* ${s.notaPrecios}` }}
+          />
+        </div>
       )}
       {s.slug === "armado-pc" && !s.notaPrecios && (
         <p style={{ marginTop: 6, color: "#64748b", fontSize: 13 }}>
