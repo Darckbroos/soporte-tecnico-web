@@ -9,6 +9,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Plans from "./pages/Plans";
 import "./styles.css";
+import "./matrix.css";
 import { SEOProvider } from "./components/SEO";
 import Layout from "./components/Layout";
 import ScrollToTop from "./components/ScrollToTop";

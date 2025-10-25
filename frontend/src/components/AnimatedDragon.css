@@ -1,0 +1,29 @@
+
+.dragon-container {
+    position: fixed;
+    top: 50%;
+    left: -100px; /* Comienza fuera de la pantalla */
+    transform: translateY(-50%);
+    animation: moveDragon 10s linear forwards;
+    z-index: 1000;
+}
+
+.dragon-container.hidden {
+    display: none;
+}
+
+.dragon-ascii {
+    font-family: 'Courier New', Courier, monospace;
+    color: #0f0;
+    font-size: 10px;
+    white-space: pre;
+}
+
+@keyframes moveDragon {
+    0% {
+        left: -100px;
+    }
+    100% {
+        left: 100%;
+    }
+}

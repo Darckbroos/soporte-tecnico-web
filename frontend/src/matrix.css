@@ -1,0 +1,119 @@
+
+body.matrix {
+  background-color: #000;
+  color: #0F0;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+body.matrix .bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+body.matrix .floating-whatsapp {
+  display: none;
+}
+
+body.matrix .whatsapp-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25D366;
+  color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+body.matrix .whatsapp-icon .tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  margin-bottom: 10px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+body.matrix .whatsapp-icon:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+body.matrix h1,
+body.matrix h2,
+body.matrix h3,
+body.matrix h4,
+body.matrix h5,
+body.matrix h6 {
+  color: #0F0;
+}
+
+body.matrix p {
+  color: #0F0;
+}
+
+body.matrix a {
+  color: #0F0;
+}
+
+/* Estilos para el botón de cambio de tema */
+body.matrix .btn.btn-primary {
+  background-color: #0F0; /* Fondo verde */
+  color: #000; /* Letras negras */
+  border: 1px solid #0F0;
+}
+
+body.matrix .btn.btn-primary:hover {
+  background-color: #FFDAB9; /* Fondo naranja pastel */
+  color: #000; /* Letras negras */
+  border-color: #FFDAB9;
+}
+
+body.matrix .card,
+body.matrix .site-header,
+body.matrix .footer,
+body.matrix .about-band,
+body.matrix .feature-right .card {
+  background-color: transparent;
+  border: none;
+}
+
+body.matrix .about-band--image {
+  background-image: none;
+}
+
+body.matrix .btn {
+  border: 1px solid #0F0;
+  background-color: transparent;
+}
+
+body.matrix .btn:hover {
+  background-color: #0F0;
+  color: #000;
+}
+
+body.matrix .muted {
+  color: #0F0 !important;
+}
+
+body.matrix .brand-logo {
+  filter: invert(1);
+}

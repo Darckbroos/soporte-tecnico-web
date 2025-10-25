@@ -1,0 +1,40 @@
+
+.floating-whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #0f0;
+    color: #000;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px #0f0;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.floating-whatsapp:hover {
+    width: 200px;
+    border-radius: 30px;
+}
+
+.whatsapp-icon {
+    font-size: 30px;
+}
+
+.whatsapp-text {
+    display: none;
+    margin-left: 10px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.floating-whatsapp:hover .whatsapp-text {
+    display: inline;
+}
+
+.floating-whatsapp:hover .whatsapp-icon {
+    display: none;
+}

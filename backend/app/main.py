@@ -9,6 +9,9 @@ import os
 from .settings import settings
 from app.utils.mailer import build_lead_email, send_email
 
+# Importar el router de Webpay
+from . import webpay
+
 print("DB URL:", engine.url)
 if engine.url.drivername.startswith("sqlite"):
     print("SQLite path:", os.path.abspath(engine.url.database))
@@ -27,11 +30,11 @@ app.add_middleware(
 # 👉 Todas las rutas con prefijo /api
 api = APIRouter(prefix="/api")
 
-@app.get("/api/health")
+@api.get("/health")
 def health():
     return {"status": "ok", "timestamp": datetime.utcnow().isoformat()}
 
-@app.post("/api/leads", response_model=schemas.LeadOut) 
+@api.post("/leads", response_model=schemas.LeadOut) 
 def create_lead(
     lead: schemas.LeadIn,
     background_tasks: BackgroundTasks,
@@ -83,5 +86,8 @@ def list_leads(db: Session = Depends(get_db)):
         .limit(100)
         .all()
     )
+
+# Incluir las rutas de Webpay en el router de la API
+api.include_router(webpay.router, prefix="/webpay", tags=["webpay"])
 
 app.include_router(api)

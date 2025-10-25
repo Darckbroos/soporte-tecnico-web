@@ -43,7 +43,40 @@ const PLANES = [
   },
 ];
 
+const API_URL = import.meta.env.VITE_API_URL || "/api";
+
 export default function SupportPlans() {
+  async function handlePayment(plan: typeof PLANES[0]) {
+    try {
+      const response = await fetch(`${API_URL}/webpay/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          planId: plan.slug, 
+          amount: 1000 // TODO: Cambiar por el precio real del plan
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al iniciar el pago");
+      }
+
+      const data = await response.json();
+
+      if (data.url && data.token) {
+        // Redirigir al usuario a la URL de Webpay
+        window.location.href = `${data.url}?token_ws=${data.token}`;
+      } else {
+        throw new Error("Respuesta inválida del servidor");
+      }
+    } catch (error) {
+      console.error("Error en el proceso de pago:", error);
+      alert("No se pudo iniciar el proceso de pago. Por favor, intenta de nuevo.");
+    }
+  }
+
   return (
     <section id="planes" className="container pricing plans-section">
       <div className="pricing-head">
@@ -72,13 +105,11 @@ export default function SupportPlans() {
               </Link>
 
               <button
-                className="btn btn-outline soon"
+                className="btn btn-outline"
                 type="button"
-                disabled
-                title="Pronto habilitaremos pago online"
-                aria-disabled="true"
+                onClick={() => handlePayment(p)}
               >
-                Pagar online (pronto)
+                Pagar online
               </button>
             </div>
           </article>
